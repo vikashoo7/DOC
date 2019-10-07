@@ -1,0 +1,30 @@
+---
+# tasks file for ubuntu-post-build
+- name : Setting the hostname
+  template:
+   src: hostname.j2
+   dest: /etc/hostname
+   owner: root
+   group: root
+   mode: 664
+
+   
+- name : Setting up the static IP address 
+  template:
+   src: interface.j2
+   dest: /etc/network/interfaces
+   owner: root
+   group: root
+   mode: 644
+
+- name: Update /etc/hosts from inventory
+  lineinfile:
+   dest=/etc/hosts
+   regexp='.*{{item}}$'
+   line='{{hostvars[item].host_ip }} {{hostvars[item].hostname}} {{hostvars[item].host_suff}} '
+  with_items: '{{groups.all}}'
+
+
+- name : Rebooting  the server with the default
+  shell:  shutdown -r now 
+  ignore_errors: yes

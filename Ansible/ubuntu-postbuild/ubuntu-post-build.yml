@@ -1,0 +1,4 @@
+---
+- hosts: new_server
+  roles:
+   - ubuntu-post-build

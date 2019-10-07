@@ -1,0 +1,19 @@
+version: '3'
+services:
+ db:
+  image: mysql:5.5
+  ports:
+   - "3306:3306"
+  environment:
+   - "MYSQL_ROOT_PASSWORD=root"
+   - "MYSQL_DATABASE=db"
+
+ web:
+  image: vikashoo7/apache-php:2.0
+  ports:
+   - "80:80"
+  volumes:
+   - "/root/lamp:/var/www/html"
+  depends_on:
+   - db
+  

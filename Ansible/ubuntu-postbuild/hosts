@@ -1,0 +1,4 @@
+[new_server]
+192.168.1.5 ansible_user=user ansible_ssh_pass=user ansible_become=yes hostname=server1.example.com host_suff=server1 host_ip=192.168.1.200
+192.168.1.6 ansible_user=user ansible_ssh_pass=user ansible_become=yes hostname=server2.example.com host_suff=server2 host_ip=192.168.1.201
+192.168.1.7 ansible_user=user ansible_ssh_pass=user ansible_become=yes hostname=server3.example.com host_suff=server3 host_ip=192.168.1.202

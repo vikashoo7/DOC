@@ -1,0 +1,80 @@
+---
+# tasks file for tar-zookeeper-installation
+- name: Creating zookeeper user
+  user:
+   name: zookeeper
+   home: /home/zookeeper
+   createhome: yes
+   shell: /bin/bash
+   state: present
+   
+- name: Installing the Java
+  apt:
+   name: openjdk-8-jre-headless
+   state: present
+
+- name: Copy the zookeeper systemd  file
+  copy:
+   src: zookeeper.service
+   dest: /etc/systemd/system/zookeeper.service
+
+- name: downloading the tar
+  get_url:
+   url: http://mirrors.estointernet.in/apache/zookeeper/zookeeper-3.4.10/zookeeper-3.4.10.tar.gz
+   dest: /home/zookeeper/zookeeper.tar.gz
+
+- name: Extract archive
+  unarchive:
+   src: /home/zookeeper/zookeeper.tar.gz
+   dest: /home/zookeeper
+   remote_src: yes
+  #   extra_opts: [--strip-components=1]
+
+- name: renaming the directory
+  shell: mv /home/zookeeper/zookeeper-*  /home/zookeeper/zookeeper
+  ignore_errors: yes
+
+- name: Creating the data and log directory
+  file:
+   path: "{{ item }}"
+   state: directory
+   owner: zookeeper
+   group: zookeeper
+  with_items:
+   - /home/zookeeper/data
+   - /home/zookeeper/log
+
+   
+- name: Creating zoo.cfg file
+  template:
+   src: zoo.cfg.j2
+   dest: /home/zookeeper/zookeeper/conf/zoo.cfg
+   owner: zookeeper
+   group: zookeeper
+
+- name: Copying the java environment file
+  copy:
+   src: zookeeper-env.sh
+   dest: /home/zookeeper/zookeeper/conf/zookeeper-env.sh
+   owner: zookeeper
+   group: zookeeper
+
+- name: Adding the server into the cluster
+  template:
+   src: myid.j2
+   dest: /home/zookeeper/data/myid
+   owner: zookeeper
+   group: zookeeper
+
+- name: creating a sym link of my id
+  file:
+   src: /home/zookeeper/data/myid
+   dest: /home/zookeeper/zookeeper/conf/myid
+   owner: zookeeper
+   group: zookeeper
+   state: link
+
+- name: Starting the zookeerper service
+  service:
+   name: zookeeper
+   state: started

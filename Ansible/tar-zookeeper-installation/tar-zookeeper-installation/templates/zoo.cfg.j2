@@ -1,0 +1,10 @@
+tickTime=2000
+initLimit=10
+syncLimit=5
+dataDir=/home/zookeeper/data
+clientPort=2181
+{% for server in groups['zookeeper'] %}
+server.{{ hostvars[server].myid }}={{ hostvars[server].ansible_fqdn }}:2888:3888
+{% endfor %}
+autopurge.snapRetainCount=10
+autopurge.purgeInterval =12

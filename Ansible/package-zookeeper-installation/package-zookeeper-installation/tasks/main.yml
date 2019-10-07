@@ -1,0 +1,26 @@
+---
+# tasks file for package-zookeeper-installation
+- name : Installing the Java Zookeeper zookeeperd
+  apt:
+   name: "{{ item }}"
+   state: present
+  with_items:
+   - openjdk-8-jre-headless
+   - zookeeper
+   - zookeeperd
+
+
+- name : Configuring the Zooker Configuration file
+  template:
+   src: zoo.cfg.j2
+   dest: /etc/zookeeper/conf/zoo.cfg
+
+- name: Adding to the cluster
+  template:
+   src: myid.j2
+   dest: /var/lib/zookeeper/myid
+
+- name: starting the service
+  service:
+   name: zookeeper 
+   state: started
