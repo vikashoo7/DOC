@@ -1,3 +1,5 @@
+##### This is work with Python 3.x #####################
+
 import paramiko
 
 host='my-server'
@@ -11,7 +13,7 @@ try:
 	command='ls -l /tmp/'
 	stdin, stdout, sterr = s.exec_command(command)
 	status=stdout.channel.recv_exit_status()		##this is will check the status of the command
-	out=stdout.read()					                  ##this will store the output value of the command
+	out=stdout.read()					##this will store the output value of the command
 	if status == 0:
 		print("\033[1;32;40m%s - File is listed \033[00m" %(host))
 	else:
