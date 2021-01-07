@@ -2,7 +2,8 @@
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
+import smtplib
+import datetime
 
 attachment='/location/of/the/attachment'
 
