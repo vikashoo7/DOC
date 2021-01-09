@@ -36,3 +36,7 @@ Jenkins - Git
 Grub trouble shooting
 --------
       https://www.youtube.com/watch?v=alH0L8mTyqY
+      
+Python Online Visualize debugger
+--------
+      http://www.pythontutor.com/visualize.html#mode=edit
