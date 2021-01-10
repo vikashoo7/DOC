@@ -1,0 +1,3 @@
+For installing "pandas", this required below package to install.
+    xz-devel
+    bzip2-devel
