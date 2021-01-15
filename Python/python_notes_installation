@@ -1,3 +1,8 @@
 For installing "pandas", this required below package to install.
     xz-devel
     bzip2-devel
+
+For installing "turtle" install the below package before installing the python. we will get the error like " No module named '_tkinter:
+    tkinter 
+    tcl-devel 
+    tk-devel
