@@ -6,3 +6,12 @@ For installing "turtle" install the below package before installing the python. 
     tkinter 
     tcl-devel 
     tk-devel
+ 
+ xcloxk need below package to install
+    xclock 
+    libXdmcp 
+    libxkbfile 
+    xkeyboard-config 
+    xorg-x11-fonts-misc 
+    xorg-x11-xauth 
+    xorg-x11-xkb-utils
