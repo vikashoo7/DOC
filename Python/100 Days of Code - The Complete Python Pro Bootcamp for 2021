@@ -56,3 +56,8 @@ How to Create Lists using List Comprehension
 	Example:
 		list = ["Alex", "Beth", "Caroline", "Dave", "Elanor", "Freddie"]
 		short_name = [ name for name in list if len(name) < 5]
+
+	Dictionary Comprehension
+	syntax:
+		new_dict ={new_key:new_value for item in list}
+		new_dict ={new_key:new_value for (key, value) in dict.items if condition}
