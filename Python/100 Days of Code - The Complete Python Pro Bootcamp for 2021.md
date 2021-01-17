@@ -43,7 +43,7 @@
  
 How to Create Lists using List Comprehension
 ------------------------------------
-	* list Comprehension - its a case where we create a new list from the previous list.
+	 *  list Comprehension - its a case where we create a new list from the previous list.
 	syntax:
 		new_list = [new_item for item in old_list]
 	Example:
