@@ -61,3 +61,20 @@ How to Create Lists using List Comprehension
 	syntax:
 		new_dict ={new_key:new_value for item in list}
 		new_dict ={new_key:new_value for (key, value) in dict.items if condition}
+	Example:
+		list = ["Alex", "Beth", "Caroline", "Dave", "Elanor", "Freddie"]
+		import random
+		student_score = {student:random.randint(1, 100) for student in name}		##creating dictionary from the list
+		passed_student = {student:score for (student, score) in student_score.items() if score > 60 }	##create the dictionary.. the student whose score more than 60
+		
+		itterating Pandas DataFram
+			import pandas
+			student_dict = {
+				student": ["Angela", "James", "Lily"]
+				"score": [56,76,98]
+			}
+			student_data_frame = pandas.DataFrame(student_dict)
+			for (index, row) in student_data_frame.iterrows():
+				print(index)		##this will print panda index
+				print(row)		##this will print panda row. each row is the data series.
+		
