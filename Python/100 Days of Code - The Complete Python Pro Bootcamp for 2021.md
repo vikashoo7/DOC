@@ -32,7 +32,7 @@
 	  #print(data[data.Temp == data.Temp.max()])	###Print the entire row where the temp is maximum.
 	  #moday = data[data.Day == "Monday"] ; monday_temp_f = int(moday.Temp)*9/5*32		###Convert the temperature celsius to fahrenheit from the "wather_data.csv"
 
-	  Creating the data frame from the scracth
+	  * Creating the data frame from the scracth
   	data_dict = {
 		"student" : ["Amy", "James", "Angela"],
 		"scores" : [76, 56, 65]
@@ -43,21 +43,21 @@
  
 How to Create Lists using List Comprehension
 ------------------------------------
-	list Comprehension - its a case where we create a new list from the previous list.
+	* list Comprehension - its a case where we create a new list from the previous list.
 	syntax:
 		new_list = [new_item for item in old_list]
 	Example:
 		list = [1, 2, 3]
 		new_list = [ item+1 for item in list ]
 
-	conditional list Comprehension
+	* conditional list Comprehension
 	syntax:
 		new_list = [new_item for item in old_list if condition]
 	Example:
 		list = ["Alex", "Beth", "Caroline", "Dave", "Elanor", "Freddie"]
 		short_name = [ name for name in list if len(name) < 5]
 
-	Dictionary Comprehension
+	* Dictionary Comprehension
 	syntax:
 		new_dict ={new_key:new_value for item in list}
 		new_dict ={new_key:new_value for (key, value) in dict.items if condition}
@@ -67,7 +67,7 @@ How to Create Lists using List Comprehension
 		student_score = {student:random.randint(1, 100) for student in name}		##creating dictionary from the list
 		passed_student = {student:score for (student, score) in student_score.items() if score > 60 }	##create the dictionary.. the student whose score more than 60
 		
-		itterating Pandas DataFram
+	* itterating Pandas DataFram
 			import pandas
 			student_dict = {
 				student": ["Angela", "James", "Lily"]
