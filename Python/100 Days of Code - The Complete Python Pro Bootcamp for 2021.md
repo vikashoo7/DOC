@@ -18,7 +18,7 @@
 	    1. Data Frame (2- dimentional data)
 	    2. Series (1- dimentional data)
   
-	Pandas excersise
+###Pandas excersise
 	  #data = pandas.read_csv("wather_data.csv")    ##it will read data
 	  #print(type(data))                            ###This will print the type of the "data" variable which is "DataFrame"
 	  #print(data["Temp"])                          ##it will print Temp colum from the "wather_data.csv"
