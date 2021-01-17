@@ -18,21 +18,21 @@
 	    1. Data Frame (2- dimentional data)
 	    2. Series (1- dimentional data)
   
-Pandas excersise
-  #data = pandas.read_csv("wather_data.csv")    ##it will read data
-  #print(type(data))                            ###This will print the type of the "data" variable which is "DataFrame"
-  #print(data["Temp"])                          ##it will print Temp colum from the "wather_data.csv"
-  #print(data["Temp"])                          ###This will print the type of the "data" variable which is "Series"
-  #data_dict = data.to_dict()                   ###This will convert the data into the python dictonary
-  #tmp_list = (data["Temp"]).to_list()          ###This will convert the data into the python list
-  #print((data["Temp"]).mean())			###This will print the average of the list
-  #print((data["Temp"]).max())			###This will print the highest value in the series data
-  #print(data.Temp)				###This is the other way to print the series (cloumn)
-  #print(data[data.Day == "Monday"])		###Print the entire row where the value of "Day=Monday"
-  #print(data[data.Temp == data.Temp.max()])	###Print the entire row where the temp is maximum.
-  #moday = data[data.Day == "Monday"] ; monday_temp_f = int(moday.Temp)*9/5*32		###Convert the temperature celsius to fahrenheit from the "wather_data.csv"
-  
-  Creating the data frame from the scracth
+	Pandas excersise
+	  #data = pandas.read_csv("wather_data.csv")    ##it will read data
+	  #print(type(data))                            ###This will print the type of the "data" variable which is "DataFrame"
+	  #print(data["Temp"])                          ##it will print Temp colum from the "wather_data.csv"
+	  #print(data["Temp"])                          ###This will print the type of the "data" variable which is "Series"
+	  #data_dict = data.to_dict()                   ###This will convert the data into the python dictonary
+	  #tmp_list = (data["Temp"]).to_list()          ###This will convert the data into the python list
+	  #print((data["Temp"]).mean())			###This will print the average of the list
+	  #print((data["Temp"]).max())			###This will print the highest value in the series data
+	  #print(data.Temp)				###This is the other way to print the series (cloumn)
+	  #print(data[data.Day == "Monday"])		###Print the entire row where the value of "Day=Monday"
+	  #print(data[data.Temp == data.Temp.max()])	###Print the entire row where the temp is maximum.
+	  #moday = data[data.Day == "Monday"] ; monday_temp_f = int(moday.Temp)*9/5*32		###Convert the temperature celsius to fahrenheit from the "wather_data.csv"
+
+	  Creating the data frame from the scracth
   	data_dict = {
 		"student" : ["Amy", "James", "Angela"],
 		"scores" : [76, 56, 65]
