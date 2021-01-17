@@ -78,3 +78,14 @@ How to Create Lists using List Comprehension
 				print(index)		##this will print panda index
 				print(row)		##this will print panda row. each row is the data series.
 		
+TKinter
+-------
+	it is used to create graphical user interface (GUI).
+	it come with python installation by default.
+	
+	window = tkinter.Tk()	##Initialising the object. TK is the class in the tkinter. Ini
+	window.title("My First GUI Program")	##Change the title of the GUI	
+	window.minsize(width=500, height=300)
+	my_label = tkinter.Label(text="I Am a Label", font=("Ariel", 24,"bold"))	##create the label
+	my_label.pack()		##Print the label
+	window.mainloop()	##keep the window open. this will be the end of the program
