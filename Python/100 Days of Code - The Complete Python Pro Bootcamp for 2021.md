@@ -1,20 +1,20 @@
  Pandas
  -------
- 	CSV sample data for wwather condition "wather_data.csv"
+ 	- CSV sample data for wwather condition "wather_data.csv"
 	  Day,Temp,Condition
 	  Monday,12,Sunny
 	  Tuesday,14,Rain
 	  Wednesday,15,Rain
-    	Thrusday,14,Cloud
+	  Thrusday,14,Cloud
 	  Friday,21,Sunny
 	  Saturday,22,Sunny
 	  Sunday,24,Sunny
 	  
- 	 this is the python data analysis library which is helpful in tabular data analysis.
- 	 Panda- Documentation: https://pandas.pydata.org/docs/
+ 	 - This is the python data analysis library which is helpful in tabular data analysis.
+ 	 - Panda- Documentation: https://pandas.pydata.org/docs/
          https://pandas.pydata.org/docs/reference/index.html
- 	 The first line of the file is considered as heading.
-	  There are 2 primary data structure of Pandas
+ 	 - The first line of the file is considered as heading.
+	 - There are 2 primary data structure of Pandas
 	    1. Data Frame (2- dimentional data)
 	    2. Series (1- dimentional data)
   
