@@ -83,7 +83,7 @@ TKinter
 	it is used to create graphical user interface (GUI).
 	it come with python installation by default.
 	
-	###### Code Explanation
+	###### Code Explaination
 	- window = tkinter.Tk()	##Initialising the object. TK is the class in the tkinter. Ini
 	- window.title("My First GUI Program")	##Change the title of the GUI	
 	- window.minsize(width=500, height=300)
