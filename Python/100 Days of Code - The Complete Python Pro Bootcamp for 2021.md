@@ -93,7 +93,7 @@ TKinter
 Unlimed Positional Argument
 ----------
 	- "*arg" is the way to provide n number of the argument in the function. here the passing argument is stored in the form of touple.
-	Example:
+	  Example:
 		def add(*arg*):
 			for i in args:
 				print(i)
@@ -101,7 +101,7 @@ Unlimed Positional Argument
 		add(1,2,3,4,)
 
 	- "**kwargs" is the way to provide number of keywork argument in the function. Here the passing key word argument is stored in the form of dictionary. 
-	Example:
+	  Example:
 		def calculate(**kwargs)
 			for i in kwargs.items():
 			print(i)
