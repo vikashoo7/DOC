@@ -40,7 +40,7 @@
 	#new_data=pandas.DataFrame(data_dict)		###Create the new Data Frame from dictonary
 	#new_data.to_csv("new_data")			###Create the new csv file with "new_data" name
  
-###### Sample code for basic component
+###### Sample code for basic Tkinter component
 
 	from tkinter import *
 
