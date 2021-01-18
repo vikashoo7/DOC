@@ -89,3 +89,21 @@ TKinter
 	my_label = tkinter.Label(text="I Am a Label", font=("Ariel", 24,"bold"))	##create the label
 	my_label.pack()		##Print the label
 	window.mainloop()	##keep the window open. this will be the end of the program
+
+Unlimed Positional Argument
+----------
+	- "*arg" is the way to provide n number of the argument in the function. here the passing argument is stored in the form of touple.
+	Example:
+		def add(*arg*):
+			for i in args:
+				print(i)
+
+		add(1,2,3,4,)
+
+	- "**kwargs" is the way to provide number of keywork argument in the function. Here the passing key word argument is stored in the form of dictionary. 
+	Example:
+		def calculate(**kwargs)
+			for i in kwargs.items():
+			print(i)
+
+		calculate(add=3, multiply=5)
