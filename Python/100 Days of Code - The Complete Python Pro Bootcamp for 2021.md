@@ -83,12 +83,26 @@ TKinter
 	it is used to create graphical user interface (GUI).
 	it come with python installation by default.
 	
-	window = tkinter.Tk()	##Initialising the object. TK is the class in the tkinter. Ini
-	window.title("My First GUI Program")	##Change the title of the GUI	
-	window.minsize(width=500, height=300)
-	my_label = tkinter.Label(text="I Am a Label", font=("Ariel", 24,"bold"))	##create the label
-	my_label.pack()		##Print the label
-	window.mainloop()	##keep the window open. this will be the end of the program
+	###### Code Explanation
+	- window = tkinter.Tk()	##Initialising the object. TK is the class in the tkinter. Ini
+	- window.title("My First GUI Program")	##Change the title of the GUI	
+	- window.minsize(width=500, height=300)
+	- my_label = tkinter.Label(text="I Am a Label", font=("Ariel", 24,"bold"))	##create the label
+	  my_label.pack()		##Print the label
+	- window.mainloop()	##keep the window open. this will be the end of the program
+	- button = tkinter.Button(text="click Me")	##Create the button
+	  button.pack()					##display the button
+	- Adding the function in the button
+		def button_clicked():
+			print("I got clicked")
+			my_label.config(text="Button Got Clicket")	##This will change the existing label after click
+			
+		button = tkinter.Button(text="click Me", command=button_clicked)
+		button.pack()
+	- input = tkinter.Entry(width=10)		##create the input box in the screen
+	- imput.pack()				##display the input box
+	  input.get()				##print the input in the input box as a string
+			
 
 Unlimed Positional Argument
 ----------
