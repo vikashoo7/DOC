@@ -89,6 +89,7 @@ TKinter
 	- window = tkinter.Tk()	##Initialising the object. TK is the class in the tkinter. Ini
 	- window.title("My First GUI Program")	##Change the title of the GUI	
 	- window.minsize(width=500, height=300)
+	- window.config(padx=10, pady=10)	##leave the margin in the layout
 	- my_label = tkinter.Label(text="I Am a Label", font=("Ariel", 24,"bold"))	##create the label
 	  my_label.pack()		##Print the label
 	- window.mainloop()	##keep the window open. this will be the end of the program
@@ -104,6 +105,22 @@ TKinter
 	- input = tkinter.Entry(width=10)		##create the input box in the screen
 	- imput.pack()				##display the input box
 	  input.get()				##print the input in the input box as a string
+
+###### Layout Manager
+	pack - it is the layout Manager.it starts running from the top to bottom. It will pack all the wedget one by one. The limitation is the pack is that it is very difficult to posting the wedget to the required place.
+	Syntax:
+		my_label.pack()
+
+	place - it is the layout Manager. It is all about the presise positioning. The limitation of the of the place that it is very difficult to manage if the wedget is large in number.
+	Syntax:	
+		my_label.place(x=100, y=200)
+
+	Grid - it is the layout Manager. The whole layout is divided into row and cloumn. wedget will allign based on the row and cloumn.
+	Syntax
+		my_label.grid(column=1, row=4)
+
+	Note: we cannot mix up grid and pack in the same program.
+
 ###### Sample code for basic Tkinter component
 
 	from tkinter import *
