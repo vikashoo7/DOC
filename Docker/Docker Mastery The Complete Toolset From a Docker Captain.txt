@@ -1,0 +1,291 @@
+#docker version		##list the version of the docker
+#docker info		##list the full information about the docker
+
+Image Vs Container
+--------------------
+	An Image is the application we want to run
+	A container is an instance of that image running as a peocess
+	we can have many container running off  the same image.
+	Docker's default image "registry" is called Docker Hub (hub.docerk.com)
+
+#docker top image_name		##process list in one container
+#docker inspect image_name	##details of one container config
+#docker stats image_name	##performcance stats for all container
+
+#docker top image_name	##list the no of process running in  the cointainer.
+#docker rm -f cointainer_name	##to force remove the cointainer
+
+What happen in "docker run"
+----------------------------
+
+1. looks for that image locally in image cache, doesnot fnd anything
+2. then looks in remote image repository(default to docker hub)
+3. Download the latest version 
+4. Create new cointainer based on that image and prepares to start
+5. Gives it a virtual IP on a private network inside docker engine
+6. Opens up ort 80 on thehost and forwords to the port 80 in cointainer
+7. Start container by using the CMD in the image Dockerfile
+
+Containers are not Mini-VMs's
+---------------------------------
+	They are just process
+	Limites to waht resource they can access
+	Exit when process stops
+
+#docker run -it 	##start new container interactively
+#dicker eec -it		##run additional command in existing container
+
+
+Docker Networks: Concepts
+--------------------------
+	Each container connected to a private virtual network "bridge"
+	Each virtual network routes through NAT firewall on host Ip
+	All container on a virtual network can talk to each other without -p
+	Best practise is to create a new virtual network for each app:
+		network "my_web_app" for mysql and php/apache containers
+		network "my_api" for mongo and nodejs container
+	Defaults work well in many cases, but easy to swap out poats to customize it.
+	Attach container to more then one virtual network(or more)
+	Skip virtual network and use host IP (--net=host)
+	Use different Docker network drivers to gain new abilites.
+
+
+#docker port container_name		##it willl list the no of open ports for container.
+#docker inspect --format 'pattern_name' container_name	##it will grep the output of the of the container
+
+
+Docker Network: CLI Management
+--------------------------------
+
+#docker network ls	 	##Show networks
+#docker network inspect		##inspect a network
+#docker network create --driver	##create a network
+#docker network connect	cointainer_id network_names	##Attach a network to container or Dyamically creates a NIC in a container on an existing virtual network.
+#docker network disconnect cointainer_id network_names	##Detach a network from container
+	
+	"--network bridge" - Default Docker virtual network , which is NAT'ed behind the Host IP.
+	"--network host" - it gains performnce by skipping virtual network but sacrifices security of container model.
+	"--network none" - removes eth0 and only leaves you with localhost interface in container.
+
+
+Docker Network : Deafult Security
+----------------------------------
+	create your apps so frontend/backend sit on same Docker network
+	Their inter-communication never leaves host
+	All externally exposed ports closed by default
+	You must manually expose via -p, which is better default security!
+	This gets even better later with Swarm and Overlay networks.
+
+Docker Networks: DNS
+	Containers shouldnot rely on IP's for inter-communication
+	DNS for friendly names is build-in if you use custom networks
+
+	Docker DNS - Docker daemon has a build in DNS server that containers use by default.
+
+
+Image and Their Layers: Review
+-------------------------------
+	Images are mode up of file system chnages and metadata
+	Each layer is uniquely identified and only stored once on a host
+	This saves storage space on host and transfer time on push/pull
+	A container is just a single read/write layer on top of image
+
+#docker image history	##show layers of changes mode in image
+	
+Official Repositories live at the "root namespace" of the registry , so they dont need account name in front of repo name
+
+Container lifetime and Persistent Data
+	Containers are usually immutable and ephemeral.
+	"immutable infrastructure": only re-deploy containers, never change.
+	Volumes: make special location outside of container UFS
+	Bind Mounts: link container path to host path
+
+Persistent Data: Binding Mounting
+	Maps a host file ot a directory to a container file or directory
+	Basically just two location pointing to the same file(s)
+	Again, Skip UFS, and host files overwrite any in container
+	Cannot use in Dockerfile, must be at "container run"
+
+
+
+Docker Compose
+-----------------
+	Configure relationship between containers
+	its comprised of 2 separate but related things:
+		1. YAML-formatted file that describes our solution options for:
+		containers
+		networks
+		volumes
+		2. A CLI tool docker-compose used for local dev/test automation with those YAML files
+
+Docker Compose YAML
+	Compse YAML format has it;s own versions: 1,2,2.1,3,3.1
+	YAML file can be used with  docker-compose command for local docker automation or.. with docker directly in production with Swarm(as of v1.13)
+	docker-compose.yml is default filename, but any can be used with docker-compose -f
+
+Docker-compose CLI
+	Not a production-grade tool but ideal for local development and test.
+	Two most common commands are:
+		docker-compose up	#setup volumes/networks and start all containers
+		docker-compose down	#Stop all containers ans remove cont/vol/net.
+	If all your projects has a Dockerfile and docker-compose.yml, then "new developer onboarding" would be:
+		git clone gitbub.com/some/software
+		docker-compose up
+
+Drupal is configured using postgres. below is the docker-compose.yml file.
+
+version: '2'
+
+services:
+ drupal:
+  image: drupal
+  ports:
+   - "8080:80"
+  volumes:
+   - drupal-modules:/var/www/html/modules
+   - drupal-profiles:/var/www/html/profiles
+   - drupal-sites:/var/www/html/sites
+   - drupal-themes:/var/www/html/themes
+
+ postgres:
+  image: postgres
+  environment:
+   - POSTGRES_PASSWORD=mypasswd
+
+volumes:
+ drupal-modules:
+ drupal-profiles:
+ drupal-sites:
+ drupal-themes:
+
+
+Using Compose to Build
+-----------------------
+
+Compose can also build your custom images
+Will buid them with "docker-compose up" if not found in cache
+Also rebuild with "docker-compose build"
+Greate for complex builds that have lots of vars or build args
+
+docker swarn init: What just happened?
+----------------------------------------
+lots of pPKI and security automation
+	Root Signing Certificate created for our Swarm
+	Certificate is issued for first MAnager node
+	Join token are created
+Raft database created to store root CA, configs and secrets.
+	Encrypted by default on disk
+	No need for another key/value system to hold orchestration/secrets
+	Replicates logs amongst Manager via mutual TLS in "control plane"
+
+#dockre node ls 	##list the no of nodes in docker swarn
+#docker service ls	##list the service in docker swarn
+#docker service update service_name --replicas 3	##increase the service replica to 3
+#docker swarm init --advertise-addr <ip address>
+#docker swarm leave		##To exit from the swarn cluster
+#docker node update --role manager node2	##update the status of the node inthe cluster
+#docker swarm join-token manager	##it will provide the token for manager to add the cluster
+#docker service create alpine ping 8.8.8.8	##create a service
+#docker service update  vigorous_jennings --replicas 3	##update the service with the 3 replicas
+# docker node ps worker1.example.com	##list the process running on the specific node
+#docker service ps <service_name>	##it will list the all the process in the node
+
+
+Overlay Multi-Host Networking
+----------------------------------
+	Just choose "--driver overloay" when creating network
+	for container-ro container traffice inside a single Swarm
+	Optional IPSec (AES) encryption on network creation
+	Each service can be connected to multi[le networks
+
+#docker network  create --driver overlay mydrupal	##it will create a network
+#docker service create --name psql --network mydrupal -e POSTGRES_PASSWORD=mypass postgres	## database is running
+# docker service create --name drupal --network mydrupal -p 80:80 drupal	##application is running. 
+
+
+Routing Mesh
+-------------
+	Routes ingress (incoming) packests for a Service to proper Task
+	Spans all nodes in Swarn
+	Uses IPVS from Linux Kernel
+	Load balances Swarm Services across theis Tasks
+	Two ways this works:
+		Container-to-container in a Overlay network (uses VIP)
+		External traffic incoming to published ports (all modes listen)
+	This is stateless load balancing
+	This LB is at OSI layer 3(TCP), not layer 4(DNS)
+	Both limitation can be overcome with:
+		Nginx or HAProxy LB proxy, or:
+		Docker Enterprise Edition, which comes with build-in L4 web proxy
+
+
+Assigment: Create Multi-Service App
+-------------------------------------
+	Using Docker's Distributed Voting App
+	Use "swarm-app-1" directory in our course repo for requirement
+	1 volume, 2 network, and 5 services needed
+	Create the commands needed, spin up services and test app
+	Everything is using Docker Hub images, so no data needed on Swarm
+	Like many computer things, this is half form and half science
+
+	Voting-app(python)		result-app(node.js)
+	------------------		-------------------
+		|				|
+		|				|
+	redis(Redis)			db(PostgreSQL)
+	------------			----------------
+		\				 /
+		 \				/
+			worker(.NET)
+			-------------
+
+Solution:
+
+####Service- layout
+
+Creting a network
+#docker network create -d overlay backend
+#docker network create -d overlay frontend
+
+-vote
+	dockersamples/examplevotingapp_vote:before
+	web front end for user to vote dog/cat
+	ideally published on TCP 80. Container listens on 80
+	on frontend network
+	2+ replica of this container
+	
+	#docker service create --name vote -p 80:80 --network frontend --replicas 2 dockersamples/examplevotingapp_vote:before
+
+-redis
+	redis:3.2
+	key/value storage for incoming votes
+	no public ports
+	no frontend network
+	2 replicas
+
+	#dokcer service create --name redis --network frontend --replicas 2 redis:3.2
+
+- worker
+	dockersamples/examplevotingapp_worker
+	backend processor of redis and storing result in postgres
+	no public ports
+	on frontend and backend network
+	1 replica
+
+	#docker service create --name worker --network frontend --network backend dockersamples/examplevotingapp_worker
+
+- db
+	postgres:9.4
+	one nemaed volume needed, pointing to /var/lib/postgresql/data
+	on backend network
+	1 replica
+
+	#docker service create --name db --network backend --mount type=volume,source=db-data,target=/var/lib/postgresql/data postgres:9.4
+
+- result
+	dockersample/examplevotingapp_result:before
+	web app that shows result
+	runs on high port since just for admin (lets image)
+
+	#docker service create --name result --network backend -p 5000:80 dockersamples/examplevotingapp_result:before
+
