@@ -1,22 +1,22 @@
 Docker
 --------
-###### how can we find in which port  applicaio  is map to?
+- ###### how can we find in which port  applicaio  is map to?
     1. run the command
-    * #docker ps -l 	//it will list the last run cointainer only.
+    #docker ps -l 	//it will list the last run cointainer only.
     2. Another way to find the post is using 'docker port' command
       #docker port applicaiton_name
     
-###### with the help of "-e" option we will pass the environment variable to cointainer.
+- ###### with the help of "-e" option we will pass the environment variable to cointainer.
 	 Example:
 		  #docker run -e "HELLO=VIKASH" ubuntu /bin/bash -c export
    	passing the variable at the run time while creating the application
       		#docker run  -d -e "REDIS_PORT_6379_TCP_ADDR=172.17.0.3" --name web -p 80:4567 rickfast/orelly-simple-web
       
-###### cointainer life cycle
+- ###### cointainer life cycle
     	#docker stop --time  10 web	//it will wait for the 10s and then it will stop the application
     
     
-###### what happen when unexpacted cause a cointainerise process to fail?
+- ###### what happen when unexpacted cause a cointainerise process to fail?
 	To avoid above, we can use restart policy.
 		#docker run --name timebomb -d -p 80:4567 --restart unless-stopped  rickfast/oreilly-time-bomb		
 	Note:it will restart the applicaiton once it is exit everytime. The only way to make the cointainer not restart automatically is to explictly  "kill" or  stop the applicatoin.
@@ -29,7 +29,7 @@ Docker Build
 ---------------
 - "docker build" command is another way to build the dockre images. it rely on a file called "Dockerfile", which spacify the list of istruction used to bild the docker images. The command that we manully run inside a cointainer to produce an image, can be specified in the "Dockerfile". This gives us sharable, reproducable, and automatable recepic for the building a docker images.
 
-###### carating a file using "Dockerfile"
+- ###### carating a file using "Dockerfile"
 	FROM alpine 			### this is the first instruction for the file. this is for which image we are going to use.
 	MAINTAINER  viksh		###this is the maintainer instruction. this indecates the owner of the docker image.
 	RUN apk update && apk add nodejs	### it is use to run a command it cointainer
@@ -44,7 +44,7 @@ Docker Build
 	#docker run vikash/average 3 3 3	###to test the image. now we have image to calculate average
 
 
-###### Docker Example
+- ###### Docker Example
     we will build the ruby application using the natural frame work and build the docker image cointaing it. The web applicaion was store the count of number of page views in "redis" and display the number of hits on the page.
 
     1.create the redis cointainer.
@@ -199,7 +199,7 @@ Docker Network
 			so if we run 2 applicaiotn with the same port then there wil be the port conflict. Since both dound witht the same host.
 				#docker run -d -P --net host --name host-network-app rickfast/hello-oreilly-http
 
-- User defined network
+- ###### User defined network
 	1.bridge type - basic type of the network. it is similar to 'docker0' or the 'default network'
 		a user defined network allows us to create a complietely isolated network on a single machine that a number of cointaner run it. we can easily create a new name bridge netwwork on a docker host. using the 'docker network create' commmand. This command simply accepts the driver type and a unique network name as argument.
 			#docker network create --driver bridge my-network
