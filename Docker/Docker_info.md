@@ -2,21 +2,28 @@ Docker
 --------
 - ###### how can we find in which port  applicaio  is map to?
     1. run the command
-    #docker ps -l 	//it will list the last run cointainer only.
+    
+    	#docker ps -l 	//it will list the last run cointainer only.
+	
     2. Another way to find the post is using 'docker port' command
-      #docker port applicaiton_name
+    
+    	#docker port applicaiton_name
     
 - ###### with the help of "-e" option we will pass the environment variable to cointainer.
-	 Example:
-		  #docker run -e "HELLO=VIKASH" ubuntu /bin/bash -c export
+	
+	Example:
+		#docker run -e "HELLO=VIKASH" ubuntu /bin/bash -c export
+		
    	passing the variable at the run time while creating the application
       		#docker run  -d -e "REDIS_PORT_6379_TCP_ADDR=172.17.0.3" --name web -p 80:4567 rickfast/orelly-simple-web
       
 - ###### cointainer life cycle
+
     	#docker stop --time  10 web	//it will wait for the 10s and then it will stop the application
     
     
 - ###### what happen when unexpacted cause a cointainerise process to fail?
+
 	To avoid above, we can use restart policy.
 		#docker run --name timebomb -d -p 80:4567 --restart unless-stopped  rickfast/oreilly-time-bomb		
 	Note:it will restart the applicaiton once it is exit everytime. The only way to make the cointainer not restart automatically is to explictly  "kill" or  stop the applicatoin.
