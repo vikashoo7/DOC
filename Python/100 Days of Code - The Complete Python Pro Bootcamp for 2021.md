@@ -1,3 +1,27 @@
+ Randomisation
+ -------
+ 	- Document link: https://www.askpython.com/python-modules/python-random-module-generate-random-numbers-sequences
+ 
+ ###### Code Explaination
+	- random.randint(1, 10)		##it will generator any number between 1 to 100. 100 is included in the list
+	- random.random()			##it will generate the floating number between 0 to 1. 1 is not included.
+	- random.random() * 5 		##Generating floating number between between 0 and 5.
+List
+-------
+	- Document link: https://docs.python.org/3/tutorial/datastructures.html
+	- It is the collection of many items. 
+	- The item can be any data type or mixed data type.
+	- The alwasys start the "[" and ends with "]"
+	- The index start from "0" and ends with "n-1"
+	- Last item of the list can also be denoted as "-1"
+	- "append" is use to add the item at the end of the string
+		country = ["Linon", "Tiger"]
+		country.append("Elephant")
+	- "extend" will bunch of the item at the end of the list
+		country = ["Linon", "Tiger"]
+		country.extend(["Elephant", "Hosrse", "Cat"]
+	- List within the list is called Nested List
+	
  Pandas
  -------
  	- CSV sample data for wwather condition "wather_data.csv"
@@ -213,7 +237,7 @@ Unlimited Positional Argument
 ----------
 	- "*arg" is the way to provide n number of the argument in the function. here the passing argument is stored in the form of touple.
 	  Example:
-		def add(*arg*):
+		def add(*arg):
 			for i in args:
 				print(i)
 
