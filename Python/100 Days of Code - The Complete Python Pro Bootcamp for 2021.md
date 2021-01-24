@@ -21,7 +21,21 @@ List
 		country = ["Linon", "Tiger"]
 		country.extend(["Elephant", "Hosrse", "Cat"]
 	- List within the list is called Nested List
-	
+
+Function 
+-------
+	- Documentation Link : https://docs.python.org/3/library/functions.html
+
+	- "def" is used to define a function.
+		Syntax:
+			def my_function():
+				code.
+
+	- function is used to call by its name.
+		Syntax:
+			my_function()	
+
+
  Pandas
  -------
  	- CSV sample data for wwather condition "wather_data.csv"
