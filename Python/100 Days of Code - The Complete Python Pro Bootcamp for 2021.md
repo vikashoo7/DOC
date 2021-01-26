@@ -35,6 +35,38 @@ Function
 		Syntax:
 			my_function()	
 
+Dictionary
+-------
+	- This is used to define in the form of key value pair.
+	- All the items saparated with ",".
+	- Syntax
+		key: value
+	- Example:
+		program_dictionay = {
+			"Bug": "An error",
+			"Function": "Pice of code",
+		}
+	- Retrieving items from dictionary
+		#print(program_dictionay["Bug"])
+
+	- Adding new items to dictionary
+		program_dictionay["loop"] = "Repeting the action"
+
+	- Declearing the empty dictionary
+		empty_dictionary = {}
+
+	- Wipe out the existing dictionary
+		program_dictionay = {}
+
+	- Editing the new dictionary
+		program_dictionay["loop"] = "Repeting the action again"
+
+
+	- looping through a dictionary
+		for key in program_dictionay:
+			print(key)				##print key onlt
+			print(program_dictionay[key])		##print the value
+
 
  Pandas
  -------
