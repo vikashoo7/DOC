@@ -34,6 +34,13 @@ Function
 	- function is used to call by its name.
 		Syntax:
 			my_function()	
+	- "return" is the last statment in the function.
+	- Docstring
+		* it is use to provide the documention of the function. it will describe the function.
+		* Docstring can be declealre after first line of the function with in thress quotes.'"""   """"'
+		* Syntax:
+			def function()
+				""" What function does """	### DocStrin
 
 Dictionary
 -------
