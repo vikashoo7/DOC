@@ -99,16 +99,7 @@ Nesting list Dictionary
 
  Pandas
  -------
- 	- CSV sample data for wwather condition "wather_data.csv"
-	  Day,Temp,Condition
-	  Monday,12,Sunny
-	  Tuesday,14,Rain
-	  Wednesday,15,Rain
-	  Thrusday,14,Cloud
-	  Friday,21,Sunny
-	  Saturday,22,Sunny
-	  Sunday,24,Sunny
-	  
+  
  	 - This is the python data analysis library which is helpful in tabular data analysis.
  	 - Panda- Documentation: https://pandas.pydata.org/docs/
          https://pandas.pydata.org/docs/reference/index.html
@@ -118,6 +109,17 @@ Nesting list Dictionary
 	    2. Series (1- dimentional data)
   
 ###### Pandas excersise
+
+ 	- CSV sample data for wwather condition "wather_data.csv"
+			  Day,Temp,Condition
+			  Monday,12,Sunny
+			  Tuesday,14,Rain
+			  Wednesday,15,Rain
+			  Thrusday,14,Cloud
+			  Friday,21,Sunny
+			  Saturday,22,Sunny
+			  Sunday,24,Sunny
+	  
 	  #data = pandas.read_csv("wather_data.csv")    ##it will read data
 	  #print(type(data))                            ###This will print the type of the "data" variable which is "DataFrame"
 	  #print(data["Temp"])                          ##it will print Temp colum from the "wather_data.csv"
