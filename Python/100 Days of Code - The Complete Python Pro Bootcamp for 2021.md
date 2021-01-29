@@ -97,6 +97,27 @@ Nesting list Dictionary
 		},
 		]
 
+class
+-------
+	- we can create a clas with a clas keyword  follow by clas name.
+	- syntax
+		calss MyClass:
+			paas
+	- we can access the clas by creating the object
+	- Syntax
+		myObject = MyClass()
+	- Attribues - are the variable of the class
+	- methods are the function of the class.
+
+	- Constructor
+		* Also call initialise the object. 
+		* we can initialise the constructor with "__init__" function
+		* Syntax:
+			class myClass:
+				def __init__(self):
+					##initialise attributes
+		* "__init__" function is always called whenever we initialise the object
+	
  Pandas
  -------
   
