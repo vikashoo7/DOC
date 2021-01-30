@@ -348,3 +348,56 @@ Unlimited Positional Argument
 			print(i)
 
 		calculate(add=3, multiply=5)
+
+Handling Errors and Exception
+-------
+
+	-Types of error
+		* FileNotFound - happen when file path not present.
+		* KeyError - happen when access the element which not present in the dictionary
+		* IndexError - happen when access the element which not present in the list
+		* TypeError - happend when we add string and integer
+
+	- To avoid the errors, we will use error handling.
+	- Syntax:
+		try:
+			code for set of task
+		except:
+			Do this if there was an exception
+		else:
+			this will run if there was no exception
+		finally:
+			This will run every time
+
+	- There can be multiple except block
+	- Example:
+		try:
+			file = open("myfile.txt")
+			a_dictionary - {"key":"value}
+			print(a_dictionary["other_key"]
+		except FileNotFoundError:
+			file = open"(myfile.txt","w")
+			file.write("write some thing")
+		except KeyError as error_message:
+			print(f"The key {error_message} does not exists.")
+
+		else:
+			content = file.read()
+			print(content)
+		finally:
+			file.close()
+			print("File was closed")
+
+	- Raising the own Exception
+		* "raise" keyword is used to create the exception
+		* Primarily this is the way to create error.
+		* example:
+			##we are calulating BMI
+			height = float(input("Height: "))
+			weight = float(input("Weight: "))
+
+			if height > 3:
+				raise ValueError ("Human Height should not be more than 3 Meter")		##creating the error. Human height more that 3 M is unrealistic. So error need to notify.
+
+			bmi = weight / height
+			print(bmi)
