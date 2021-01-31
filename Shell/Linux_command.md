@@ -1,6 +1,7 @@
 - sending email:
-    * mail -s "Test Subject" my_emailid@email.com
-    * body of the mail. (ctrl+d)
+  -------
+       #mail -s "Test Subject" my_emailid@email.com
+       body of the mail. (ctrl+d)
     
 - Sending Email with the specific sender
     * echo "This is the main body of the mail" | mail -s "Subject of the Email" -S  from=some@mail.tld  sender@mail.com
@@ -129,3 +130,6 @@
 
 - To insert a line before the last ($) one:
     * #sed '$i<pattern>!' filename
+
+- Create the file using dd command
+   * dd if=/dev/zero of=output.dat  bs=1024  count=100000  ##create 100M file
