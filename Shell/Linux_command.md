@@ -1,4 +1,4 @@
-- sending email:
+sending email:
   -------
        #mail -s "Test Subject" my_emailid@email.com
        body of the mail. (ctrl+d)
@@ -6,8 +6,8 @@
        ######Sending Email with the specific sender
        #echo "This is the main body of the mail" | mail -s "Subject of the Email" -S  from=some@mail.tld  sender@mail.com
 
-- check the remote port is open or not
-------
+check the remote port is open or not
+-------
       #echo > /dev/tcp/server_ip/port_no
       #nc -zv server_name port_number
       
