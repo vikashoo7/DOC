@@ -7,41 +7,54 @@
        #echo "This is the main body of the mail" | mail -s "Subject of the Email" -S  from=some@mail.tld  sender@mail.com
 
 - check the remote port is open or not
-    * echo > /dev/tcp/server_ip/port_no
+------
+      #echo > /dev/tcp/server_ip/port_no
+      #nc -zv server_name port_number
+      
+      ######To check the remote host port active or not
+      #nc -w 5 172.24.230.247  25
 
 - Extending the xfs file system
-    * xfs_growfs /mount/point -D size       ##Where: -D option allow us to give the filesystem extnsion. if no -D option will be there then it will extend to the maximum size.
+------
+    #xfs_growfs /mount/point -D size       ##Where: -D option allow us to give the filesystem extnsion. if no -D option will be there then it will extend to the maximum size.
  
 - Scan disk
-    * for i in /sys/class/scsi_host/*; do echo "- - -"> $i/scan; done
+------
+    #for i in /sys/class/scsi_host/*; do echo "- - -"> $i/scan; done
 
 - SAR  command
-    * sar -r  -f /var/log/sa/sa09 -s 12:00:00 -e 12:50:00   
+------
+    #sar -r  -f /var/log/sa/sa09 -s 12:00:00 -e 12:50:00   
  
 - Finding a file with a specific size
-    * find /etc -size +100k
-    * find / -xdev -size +100M -exec ls -alh {} \; | sort -rn -k 5        //it will be in more readable format
+------
+    #find /etc -size +100k
+    #find / -xdev -size +100M -exec ls -alh {} \; | sort -rn -k 5        //it will be in more readable format
 
 
 - Find the largest  top 10 file 
-    * du -a /var | sort -n -r | head -n 10
-    * du -hsx * | sort -rh | head                  //this is more readable  format
+------
+    #du -a /var | sort -n -r | head -n 10
+    #du -hsx * | sort -rh | head                  //this is more readable  format
 
 
 - Finding the size of each directory
-    * du -sh *
+------
+    #du -sh *
   
 - File system extension
-    * lvresize --resizefs --size +50GB /dev/RootVG/lv_mylvm                       (review)
+------
+    #lvresize --resizefs --size +50GB /dev/RootVG/lv_mylvm                       #use in rhel 6
  
-- To check the remote host port active or not
-    * nc -w 5 172.24.230.247  25
+
   
 - df –h output
-    * df -h  | egrep '/opt|/app' | rev | awk '{ print $1 $2 $3 $4 $5 }' |rev
+------
+    #df -h  | egrep '/opt|/app' | rev | awk '{ print $1 $2 $3 $4 $5 }' |rev
  
 - running  script remotely by passing the argument.
-    * ssh -q myserver.com 'cat | bash /dev/stdin /myValue '  < chklist.sh
+------
+    #ssh -q myserver.com 'cat | bash /dev/stdin /myValue '  < chklist.sh
 
 - Changing the password without input ( Changing the password using echo )
     * echo "linuxpassword" | passwd --stdin linuxuser
