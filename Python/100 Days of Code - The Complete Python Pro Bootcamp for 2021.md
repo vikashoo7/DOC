@@ -412,3 +412,53 @@ datetime module
 
 	- Providing the custome data
 		data_of_birth = datetime.datetime(year=2020, month=12, day=15, hour=4)
+
+
+API (Application Programming Interface)
+----
+	- It is a set of commands, function, protocols, and object that program can use to interact with an external system.
+	- The API return the data in json formate.
+	- "request" module is use to call the API
+	- Documentation : http://open-notify.org/Open-Notify-API/ISS-Location-Now/
+	- Status Code URL: https://httpstatuses.com/
+	- Request Module URL: https://pypi.org/project/requests/
+	- Response Code sumarry
+		* 1XX : wait
+		* 2XX : working
+		* 3XX : No permission
+		* 4XX : thing we looking for does not exists
+		* 5XX : server has issue
+		
+	- Example:
+		import request
+		response = request.get(url="http://api.open-notify.org/iss-now.json")		##this will get the data
+		print(respose)							##this will print the response code. 200 -> means request is successful else request is unsuccessful.
+		response.raise_for_status()		##This will print the error code except 200
+		data = response.json()			##print the all the data
+		longitude = data["iss_position"]["longitude"]	##print the specific data from the data variable
+		latitude = data["iss_position"]["latitude"]
+		iss_position(longitude, latitud)
+		print(iss_position)
+
+
+
+
+
+
+
+	######API Parameter
+	- response = request.get(URL, parama=parameter)
+	- https://api.sunrise-sunset.org/json?lat=1.23456&lng=-1.345	##passing the parameter via url
+	- Example
+		MY_LAT = 1.23456
+		My_LONG = -1.345
+
+		parameters = {
+			"lat" = MY_LAT
+			"lng" = My_LONG
+		}
+
+	response = request.get("https://api.sunrise-sunset.org/json", params=parameters)
+	response.raise_for_status()
+	data = response.json()
+	print(data)
