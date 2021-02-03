@@ -401,3 +401,14 @@ Handling Errors and Exception
 
 			bmi = weight / height
 			print(bmi)
+
+datetime module
+-------
+	- it is comming with pre-loaded with python.
+	- Example
+		now = datetime.datetime.now()	##proide the latset time
+		year = now.year		##provide the year
+
+
+	- Providing the custome data
+		data_of_birth = datetime.datetime(year=2020, month=12, day=15, hour=4)
