@@ -422,6 +422,7 @@ API (Application Programming Interface)
 	- Documentation : http://open-notify.org/Open-Notify-API/ISS-Location-Now/
 	- Status Code URL: https://httpstatuses.com/
 	- Request Module URL: https://pypi.org/project/requests/
+				https://requests.readthedocs.io/en/latest/api/
 	- Response Code sumarry
 		* 1XX : wait
 		* 2XX : working
@@ -462,3 +463,25 @@ API (Application Programming Interface)
 	response.raise_for_status()
 	data = response.json()
 	print(data)
+	
+	- Type of HTTP Request
+		* get - get the data
+		* post - send the data to the server.
+		* put - update the data
+		* delete - delete the data
+
+	- there are 3 way to supply API Key
+		1. via the apiKey query string parameter
+		2. via the X-Api-Key HTTP header
+		3. via the Authorization HTTP header 
+
+	- Header - It is used to pass the apiKey in a crypted way.
+
+	- Example:
+		headers = {
+			"X-user-Token" : TOKEN
+		}
+
+		response = requests.post(url="https//api.myurl", headers=headers)
+		print(response.text)
+
