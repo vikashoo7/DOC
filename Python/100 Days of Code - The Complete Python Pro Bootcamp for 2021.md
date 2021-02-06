@@ -485,3 +485,44 @@ API (Application Programming Interface)
 		response = requests.post(url="https//api.myurl", headers=headers)
 		print(response.text)
 
+		##update the value
+		update_endpoint = "https//myurl"
+
+		new_data = {
+			"updated_item": "new_value"
+		}
+
+		response = requests.put(url=update_endpoin, update=new_data, headers=headers)
+
+
+		##deleting the value
+		delete_endpoint = "https//myurl"
+		response = requests.put(url=delete_endpoint, headers=headers)
+
+
+Web Scraping
+------------
+	- look for a data in html pages.
+	- "beautifulsoup" is the name of the modulw
+	- Documentation - https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+	- "bs4" is the name of the module. "4" is the version.
+	- Example:
+		from b4s import BeautifulSoup
+
+		with open("website.html") as file:
+			contents = file.read()
+
+		soup = BeautifulfulSoup(contents, "html.parser")	##tell which type of data it is
+		print (soup.title)					## This will print the title of the webpage
+		print (soup.title.string)				##This will only print the titel string of the webpage
+		print (soup.prettify())					##This will print the content of soup in indented way
+		print (soup.a)	##This will print first anchor tag of the web page
+		all_anchor_tags = soup.find_all(name="a")	##This will collect all the anchor tag of the web page
+
+		##Printing all the test in the anchor tag
+		for tag in all_anchor_tags:
+			print(tag.getText())
+			print(tag.get("href")		##This will print all the URL of the web page
+
+		##print all the URL in anchor taf
+		print(soup.find(name="h1", id="name")	##Print the specific tag with name=h1 and id=name. This will print the only one tag
