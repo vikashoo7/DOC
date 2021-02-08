@@ -526,3 +526,7 @@ Web Scraping
 
 		##print all the URL in anchor taf
 		print(soup.find(name="h1", id="name")	##Print the specific tag with name=h1 and id=name. This will print the only one tag
+
+Selinum Webdriver
+------
+	it is helpful in automating the browser.
