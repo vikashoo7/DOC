@@ -1,0 +1,12 @@
+* creating a roles
+    ansible-galaxy init node-expoter --offline
+
+* How to list the all ansible roles?
+* How to delete the ansible roles?
+* How to clone the ansible roles from the source reposistory?
+
+* To check the syntak
+	  #ansible-playbook  -i /tmp/host <xxx.yml> --syntax-check
+
+* TO dry run the playbook
+	  #ansible-playbook  -i /tmp/host node-expoter.yml  --check
