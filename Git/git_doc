@@ -1,0 +1,124 @@
+to clone a specific directory
+	#git clone -b master  git@magneto.sys.comcast.net:bsd_ops/simon.git
+
+look at the local branches in your repository:	
+	# git branch
+
+To see what are the other brances are there:
+	# git branch -a
+
+if you look at your local branches
+	#  git branch
+
+You can actually track more than one remote repository using git remote.
+	$ git remote add win32 git://example.com/users/joe/myproject-win32-port
+	$ git branch -a
+
+things are getting pretty crazy, so run gitk
+	$ gitk --all &
+
+Initialize the local directory as a Git repository.
+	$ git init
+
+Add the files in your new local repository. This stages them for the first commit.
+	$ git add .
+
+Commit the files that you've staged in your local repository.
+	$git commit -m "First commit"
+
+
+In the Command prompt, add the URL for the remote repository where your local repository will be pushed.
+	$ git remote add origin remote repository URL
+	git remote -v	# Verifies the new remote URL
+
+Push the changes in your local repository to GitHub.
+	$ git push origin master
+======================================================================================================================================
+
+Branches in the GIT
+---------------------
+	'master; is the default branch in the git
+
+list all the branches in the git
+	#git branch
+
+Create the new branch locally
+	#git branch new_branch
+
+Create the new branch on the repository server
+	#git push origin <new_branch>
+
+To switch the branch
+	#git checkout new_branch
+
+to list the log
+	#git log
+
+Merge the code into the master
+	first, we need to go to the base branch where we want to merge the code from the other branch
+	#git merge other_branch
+
+Createt the branch in the gitbub
+	switch to the branch that you want to add
+	#git push --set-upstream origin new_branch
+
+Deleting the branch
+	#git branch -d new_branch
+
+Deleting the branch to the repository server
+	#git push -d <branch_name>
+	#git push origin  +:refs/heads/<branch-name>
+
+Create a branch and checkout the branch
+	#git checkout -b new_branch
+
+To update the repository
+	#git fetch
+	
+
+
+Undoing/Reverting/Resetting code changes
+----------------------------------------
+
+
+undoing the commited code
+	#git revert id_name
+	#git revernt -n id_name 	###it will change the file and we need to explictly commit
+
+Restting the commit after a particular commit
+	#git reset --hard id_name 
+
+
+git tags real-time use-cases 
+------------------------------------------
+
+What is git tag?
+	it is use for release purpose. It is the verison of the code. It is use to release a particular version of the code.
+
+There are 2 types of tag
+	1. light weight tag - this is just tell about the version.
+	2. Annotated tag - this will tell about the complete information like release, author etc.
+
+How to add the tag?
+	#git tag -a <version-numbas> -m "<message>"
+
+List the info about the tag
+	#git show <version-number>
+
+PUsh the tag to the reposistoyt
+	#git push origin <tag_version>
+	#git push origin v1.0
+
+To provide the any previous cammit as a tag
+	#git tag <tag-version> <commit-id>
+
+pushing all tag at a time
+	#git push origin --tags
+
+How to delete a tag from the local
+	#git tag -d  <tag_version>
+	#git tag -d v1.0
+
+deltele a tag from the remote
+	#git push origin :refs/tag/<tag_version>
+	# git push origin :refs/tags/v.01
