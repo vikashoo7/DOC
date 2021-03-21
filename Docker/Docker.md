@@ -190,7 +190,7 @@ Entry point and Command
 
 -----------------------------------------------------------------
 
-pushing the image to the docker hub
+Pushing the image to the docker hub
 ------
 
 	1. python applicaiotn
@@ -239,7 +239,7 @@ pushing the image to the docker hub
 --------------------------------------------------------------------------------
 Network
 ------
-	Docker bydefault runs three network on the docker host. we can see there network by running the below comamnd.
+	* Docker bydefault runs three network on the docker host. we can see there network by running the below comamnd.
 		#docker network ls
 	1. Default network or bridge network
 		Any cointainer running with a bridge network, cannot to access to the outside  docker host unless the host is mapped with "-t" parameter in the docker run.
@@ -253,7 +253,7 @@ Network
 		so if we run 2 applicaiotn with the same port then there wil be the port conflict. Since both dound witht the same host.
 			#docker run -d -P --net host --name host-network-app rickfast/hello-oreilly-http
 
-	user defined network
+	* user defined network
 	1.bridge type - basic type of the network. it is similar to 'docker0' or the 'default network'
 		a user defined network allows us to create a complietely isolated network on a single machine that a number of cointaner run it. we can easily create a new name bridge netwwork on a docker host. using the 'docker network create' commmand. This command simply accepts the driver type and a unique network name as argument.
 			#docker network create --driver bridge my-network
@@ -266,34 +266,33 @@ Network
 
 Volumes
 -------
-	one way to create the volume is to create "-v" option when executing the docker run
-	date volumes and directory donot used NFS.
-	volumes can also be mounted  to directory on the host machines.
-	When mounting the volume to the localhost machine, we need to suppliy to absolute paths delimited by ":" "absolute path of the base machine:dircetory inside the cointainer to mount"
+	- one way to create the volume is to create "-v" option when executing the docker run
+	- date volumes and directory donot used NFS.
+	- volumes can also be mounted  to directory on the host machines.
+	- When mounting the volume to the localhost machine, we need to suppliy to absolute paths delimited by ":" "absolute path of the base machine:dircetory inside the cointainer to mount"
 
-	data volume cointainer using the "docker create" command
-	data volume cointainer are  the docker cointainer that dont run a applicaion. They just have the volume that can be shared.
-	"docker create" is very similar to the "docker run" except that the created cointainer is never started.
+	- data volume cointainer using the "docker create" command
+	- data volume cointainer are  the docker cointainer that dont run a applicaion. They just have the volume that can be shared.
+	- "docker create" is very similar to the "docker run" except that the created cointainer is never started.
 		#docker create -v /usr/local/var/lib/couchdb --name db-data debian:jessie /bin/true
 
 
-	Using volume from the already created volume cointainer
+	- Using volume from the already created volume cointainer
 		#doceker run -d -p 5984:5984 -v /usr/local/var/lib/couchdb --name db1 --volume-from db-data klaemo/clouchdb
 
 -------------------------------------------------------------------------------------------------
 
 Docker Compose
 ------
-	it uses a yml file that describe multiple cointainer to manage as a cointaier as a whole. 
-	There are 2 different specification of the docker-compose-yml file.
-	Example1: setting up the cointainer
-
-	version: "2"			#####docker compose specification
-	service:			#####service declearation
-		kv-store-1:		#####cointainer name 1
-			image: redis	#####operatoin perform in the 1st cointainer
-		kv-store-2:		#####cointainer name 2
-			image: redis	#####operatoin perform in the 1st cointainer
+	- it uses a yml file that describe multiple cointainer to manage as a cointaier as a whole. 
+	- There are 2 different specification of the docker-compose-yml file.
+	- Example1: setting up the cointainer
+		version: "2"			#####docker compose specification
+		service:			#####service declearation
+			kv-store-1:		#####cointainer name 1
+				image: redis	#####operatoin perform in the 1st cointainer
+			kv-store-2:		#####cointainer name 2
+				image: redis	#####operatoin perform in the 1st cointainer
 
 
 	#docker-compose up 		#####to run the docker file
@@ -305,23 +304,23 @@ Docker Compose
 	Example2: Setting up the cointer and establishing the relation between them. (elk stack)
 
 
-	version: '2'
-	service:
-		elasticsearch:
-			image: elasticsearch:2.2.1
-		kibana:
-			image: kibana:4.4.2
-			ports:
-				- "5601:5601"
-			environment:
-				- ELASTICSEARCH_URL=http://elasticsearch:9200
-			depends_on:
-				- elasticsearch
-		logstash:
-			image: logstash:2.2.2
-			command: -e 'input { tcp { port => 5555 }} output {  elasticsearch { hosts => ["elasticsearch:9200"] } }'
-			ports:
-				- "5555:5555"
-			depends_on:
-				- elasticsearch
+		version: '2'
+		service:
+			elasticsearch:
+				image: elasticsearch:2.2.1
+			kibana:
+				image: kibana:4.4.2
+				ports:
+					- "5601:5601"
+				environment:
+					- ELASTICSEARCH_URL=http://elasticsearch:9200
+				depends_on:
+					- elasticsearch
+			logstash:
+				image: logstash:2.2.2
+				command: -e 'input { tcp { port => 5555 }} output {  elasticsearch { hosts => ["elasticsearch:9200"] } }'
+				ports:
+					- "5555:5555"
+				depends_on:
+					- elasticsearch
 	----------------------------------------------------------------------------------------
