@@ -101,172 +101,165 @@ Docker Images
 
 # Docker file
 	* py-can only work from  the base machine but Add-content of the dirctory. Also in using add we can use URL
-	Sample file
-	    FROM centos:latest
-	    MAINTAINER vikash@gmail.com
-	    RUN yum -y upade
-	    ENV DB_NAME=test DB_PASSWORD=test DB_USER=admin DB_HOST=appdb.cand1.com
-	    ADD index.html /var/www/html/index.html
-	    RUN yum -y install httpd
-	    EXPOSE 80
-	    CMD ["httpd", "-D", "FOREGRPUND"]
+	* Sample file
+		    FROM centos:latest
+		    MAINTAINER vikash@gmail.com
+		    RUN yum -y upade
+		    ENV DB_NAME=test DB_PASSWORD=test DB_USER=admin DB_HOST=appdb.cand1.com
+		    ADD index.html /var/www/html/index.html
+		    RUN yum -y install httpd
+		    EXPOSE 80
+		    CMD ["httpd", "-D", "FOREGRPUND"]
 
-	#docker build -t myapache:1.0 .
-	#docker history myapache:1.0
+	* #docker build -t myapache:1.0 .
+	* #docker history myapache:1.0
 
 ======================================================================================
 
 
 
-	"docker build" command is another way to build the dockre images. it rely on a file called "Dockerfile", which spacify the list of istruction used to bild the docker images. The command that we manully run inside a cointainer to produce an image, can be specified in the "Dockerfile". This gives us sharable, reproducable, and automatable recepic for the building a docker images.
+	* "docker build" command is another way to build the dockre images. it rely on a file called "Dockerfile", which spacify the list of istruction used to bild the docker images. The command that we manully run inside a cointainer to produce an image, can be specified in the "Dockerfile". This gives us sharable, reproducable, and automatable recepic for the building a docker images.
 
-carating a file using "Dockerfile"
-
-	FROM alpine 			### this is the first instruction for the file. this is for which image we are going to use.
-	MAINTAINER  viksh		###this is the maintainer instruction. this indecates the owner of the docker image.
-	RUN apk update && apk add nodejs	### it is use to run a command it cointainer
-	RUN mkdir average 
-	ADD average.js average/				### we can add file from the local matchine to the image
-	WORKDIR average			###we can set the current working directory to the "average" working directory
-	ENTRYPOINT ["node","average.js"]	###it defines main process will run with the cointaner
+	* carating a file using "Dockerfile"
+		FROM alpine 			### this is the first instruction for the file. this is for which image we are going to use.
+		MAINTAINER  viksh		###this is the maintainer instruction. this indecates the owner of the docker image.
+		RUN apk update && apk add nodejs	### it is use to run a command it cointainer
+		RUN mkdir average 
+		ADD average.js average/				### we can add file from the local matchine to the image
+		WORKDIR average			###we can set the current working directory to the "average" working directory
+		ENTRYPOINT ["node","average.js"]	###it defines main process will run with the cointaner
 	
 
 
-#docker build -t vikash/average .	###it will create a docker image. "-t" is use to provide the name of the name of the image
-#docker run vikash/average 3 3 3	###to test the image. now we have image to calculate average
+	* #docker build -t vikash/average .	###it will create a docker image. "-t" is use to provide the name of the name of the image
+	* #docker run vikash/average 3 3 3	###to test the image. now we have image to calculate average
 
 --------------------------------------------------------------
 
-we will build the ruby application using the natural frame work and build the docker image cointaing it. The web applicaion was store the count of number of page views in "redis" and display the number of hits on the page.
+	* we will build the ruby application using the natural frame work and build the docker image cointaing it. The web applicaion was store the count of number of page views in "redis" and display the number of hits on the page.
 
-1.create the redis cointainer.
+		1.create the redis cointainer.
+			# docker run -d -p 80:6379 --name redis redis
+			#vi counter.rb
+				require 'sinatra'
+				require  'redis'
 
-# docker run -d -p 80:6379 --name redis redis
+				set :bind, '0.0.0.0'
 
-#vi counter.rb
+				configure do
+					$redis = Redis.new(:host => 'redis')
+				end
 
-require 'sinatra'
-require  'redis'
+				get '/' do
+					count = $redis.incr('count')
 
-set :bind, '0.0.0.0'
+					"<h1>Hello O'Reilly!</h1>"\
+					"<p> This page has been viewed #{count} times!</p>"
+				end
+				
+			#vi Dockerfile
+				FROM alpine
+				MAINTAINER vikash
+				RUN apk update && apk add ruby
+				RUN gem install sinatra --n0-ri --no-rdoc
+				RUN gem install redis --no-ri  --no-rdoc
+				ADD counter.rb counter.rb
+				EXPOSE 4567
+				ENTRYPOINT ["ruby","counter.rb"]
 
-configure do
-	$redis = Redis.new(:host => 'redis')
-end
+		2. run the docker build command to build the image.
 
-get '/' do
-	count = $redis.incr('count')
-
-	"<h1>Hello O'Reilly!</h1>"\
-	"<p> This page has been viewed #{count} times!</p>"
-end
-	
-
-#vi Dockerfile
-
-FROM alpine
-MAINTAINER vikash
-RUN apk update && apk add ruby
-RUN gem install sinatra --n0-ri --no-rdoc
-RUN gem install redis --no-ri  --no-rdoc
-ADD counter.rb counter.rb
-EXPOSE 4567
-ENTRYPOINT ["ruby","counter.rb"]
-
-2. run the docker build command to build the image.
-
-#docker build -t vikash/counter .
+			#docker build -t vikash/counter .
 
 -------------------------------------------------------------------------
 
 Entry point and Command
+------
+	There are 2 way to specify default executable in Dockerfile.
+	1.Entry point 
+	2.command
 
-There are 2 way to specify default executable in Dockerfile.
-1.Entry point 
-2.command
+	command:
+	the alpine linx docker image does not specify command or entry point.
 
-command:
-the alpine linx docker image does not specify command or entry point.
+	#docker run alpine
 
-#docker run alpine
-
-in command, we can overwrite the command by passing at the time of run like
-#dokcer run alpine ping
-where as in the ENTRYPOINT, we cannot over write the command
+	in command, we can overwrite the command by passing at the time of run like
+	#dokcer run alpine ping
+	where as in the ENTRYPOINT, we cannot over write the command
 
 -----------------------------------------------------------------
 
 pushing the image to the docker hub
+------
 
-1. python applicaiotn
+	1. python applicaiotn
+		#vi hello.py
 
+		from flask import Flask
+		app = Flask(__name__)
 
-#vi hello.py
+		@app.route('/')
+		def hello():
+			return 'Hello from Docker Hub!'
 
-from flask import Flask
-app = Flask(__name__)
+		if __name__ == '__main':
+			app.run(debug=True,host='0.0.0.0')
 
-@app.route('/')
-def hello():
-        return 'Hello from Docker Hub!'
+	2. Docker file
 
-if __name__ == '__main':
-        app.run(debug=True,host='0.0.0.0')
+		#vi Dockerfile
 
-2. Docker file
+		FROM alpine
+		run apk add --update \
+			python \
+			python-dev \
+			py-pip
 
-#vi Dockerfile
-
-FROM alpine
-run apk add --update \
-        python \
-        python-dev \
-        py-pip
-
-RUN pip install flask
-COPY hello.py /
-EXPOSE 8080
-ENTRYPOINT ["python", "hellp.py"]
-
-
-3. build the docker image
-	#docker build .
+		RUN pip install flask
+		COPY hello.py /
+		EXPOSE 8080
+		ENTRYPOINT ["python", "hellp.py"]
 
 
-4.tag a image
-	#docker tag 387 vikashoo7/hello-dockerhub:1.0		###vikashoo7 - username of the dockerhub
-	#docker tag 387 vikash/hello-dockerhub:latest		//it is specified  latest
+	3. build the docker image
+		#docker build .
 
-5. login to the dockerhub
-	#docker login
 
-6. push the image to the dockerhub
-	#docker push vikashoo7/hello-dockerhub
-	
+	4.tag a image
+		#docker tag 387 vikashoo7/hello-dockerhub:1.0		###vikashoo7 - username of the dockerhub
+		#docker tag 387 vikash/hello-dockerhub:latest		//it is specified  latest
+
+	5. login to the dockerhub
+		#docker login
+
+	6. push the image to the dockerhub
+		#docker push vikashoo7/hello-dockerhub
 
 --------------------------------------------------------------------------------
+Network
+------
+	Docker bydefault runs three network on the docker host. we can see there network by running the below comamnd.
+		#docker network ls
+	1. Default network or bridge network
+		Any cointainer running with a bridge network, cannot to access to the outside  docker host unless the host is mapped with "-t" parameter in the docker run.
+	2. None network
+		its actually nothing.
+		to lauch a cointainer on a network other than the deafult bridge the network, we can use the "--net" option in specifying the name of the network to use. eg:
+			#
+	3.host network
+		it is the same networking that the docker host is using.
+		in this case, we no need to bound the host with port because it is directly bounding on the host network.
+		so if we run 2 applicaiotn with the same port then there wil be the port conflict. Since both dound witht the same host.
+			#docker run -d -P --net host --name host-network-app rickfast/hello-oreilly-http
 
-Docker bydefault runs three network on the docker host. we can see there network by running the below comamnd.
-	#docker network ls
-1. Default network or bridge network
-	Any cointainer running with a bridge network, cannot to access to the outside  docker host unless the host is mapped with "-t" parameter in the docker run.
-2. None network
-	its actually nothing.
-	to lauch a cointainer on a network other than the deafult bridge the network, we can use the "--net" option in specifying the name of the network to use. eg:
-		#
-3.host network
-	it is the same networking that the docker host is using.
-	in this case, we no need to bound the host with port because it is directly bounding on the host network.
-	so if we run 2 applicaiotn with the same port then there wil be the port conflict. Since both dound witht the same host.
-		#docker run -d -P --net host --name host-network-app rickfast/hello-oreilly-http
+	user defined network
+	1.bridge type - basic type of the network. it is similar to 'docker0' or the 'default network'
+		a user defined network allows us to create a complietely isolated network on a single machine that a number of cointaner run it. we can easily create a new name bridge netwwork on a docker host. using the 'docker network create' commmand. This command simply accepts the driver type and a unique network name as argument.
+			#docker network create --driver bridge my-network
 
-user defined network
-1.bridge type - basic type of the network. it is similar to 'docker0' or the 'default network'
-	a user defined network allows us to create a complietely isolated network on a single machine that a number of cointaner run it. we can easily create a new name bridge netwwork on a docker host. using the 'docker network create' commmand. This command simply accepts the driver type and a unique network name as argument.
-		#docker network create --driver bridge my-network
-
-to launch cointaner with the user defined network, we can specify the network name using the "--net" option with "docker run"
-		#docker run -d -P --net my-network --name hello	rickfast/hello-oreilly-http	
+	to launch cointaner with the user defined network, we can specify the network name using the "--net" option with "docker run"
+			#docker run -d -P --net my-network --name hello	rickfast/hello-oreilly-http	
 
 
 --------------------------------------------------------------------------------------
