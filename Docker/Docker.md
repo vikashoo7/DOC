@@ -16,7 +16,7 @@ Commands
     #docker network ls  //hist the available netwotrk
     #docker -H 10.0.2.4:2376 stats //list the currne tstatus of the server
     
-	how can we find in which port  applicaio  is map to?
+    ######find in which port  applicaio  is map to?
 		1. run the command
 			#docker ps -l 	//it will list the last run cointainer only.
 		2. Another way to find the post is using 'docker port' command
@@ -100,25 +100,25 @@ Docker Images
 
 
 # Docker file
-copy-can only work from  the base machine but Add-content of the dirctory. Also in using add we can use URL
-Sample file
-    FROM centos:latest
-    MAINTAINER vikash@gmail.com
-    RUN yum -y upade
-    ENV DB_NAME=test DB_PASSWORD=test DB_USER=admin DB_HOST=appdb.cand1.com
-    ADD index.html /var/www/html/index.html
-    RUN yum -y install httpd
-    EXPOSE 80
-    CMD ["httpd", "-D", "FOREGRPUND"]
+	* py-can only work from  the base machine but Add-content of the dirctory. Also in using add we can use URL
+	Sample file
+	    FROM centos:latest
+	    MAINTAINER vikash@gmail.com
+	    RUN yum -y upade
+	    ENV DB_NAME=test DB_PASSWORD=test DB_USER=admin DB_HOST=appdb.cand1.com
+	    ADD index.html /var/www/html/index.html
+	    RUN yum -y install httpd
+	    EXPOSE 80
+	    CMD ["httpd", "-D", "FOREGRPUND"]
 
-#docker build -t myapache:1.0 .
-#docker history myapache:1.0
+	#docker build -t myapache:1.0 .
+	#docker history myapache:1.0
 
 ======================================================================================
 
 
 
- "docker build" command is another way to build the dockre images. it rely on a file called "Dockerfile", which spacify the list of istruction used to bild the docker images. The command that we manully run inside a cointainer to produce an image, can be specified in the "Dockerfile". This gives us sharable, reproducable, and automatable recepic for the building a docker images.
+	"docker build" command is another way to build the dockre images. it rely on a file called "Dockerfile", which spacify the list of istruction used to bild the docker images. The command that we manully run inside a cointainer to produce an image, can be specified in the "Dockerfile". This gives us sharable, reproducable, and automatable recepic for the building a docker images.
 
 carating a file using "Dockerfile"
 
