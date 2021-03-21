@@ -15,93 +15,88 @@ Commands
     #docker logs <docker-image>   ##display the logs
     #docker network ls  //hist the available netwotrk
     #docker -H 10.0.2.4:2376 stats //list the currne tstatus of the server
-
-how can we find in which port  applicaio  is map to?
-	1. run the command
-		#docker ps -l 	//it will list the last run cointainer only.
-	2. Another way to find the post is using 'docker port' command
-		#docker port applicaiton_name
     
+	how can we find in which port  applicaio  is map to?
+		1. run the command
+			#docker ps -l 	//it will list the last run cointainer only.
+		2. Another way to find the post is using 'docker port' command
+			#docker port applicaiton_name
+
 Docker Notes
 ----------
-- how can we find in which port  applicaio  is map to?
-	1. run the command
-		#docker ps -l 	//it will list the last run cointainer only.
-	2. Another way to find the post is using 'docker port' command
-		#docker port applicaiton_name
-    
-- with the help of "-e" option we will pass the environment variable to cointainer.
-	 Example:
-		  #docker run -e "HELLO=VIKASH" ubuntu /bin/bash -c export
-   passing the variable at the run time while creating the application
-      #docker run  -d -e "REDIS_PORT_6379_TCP_ADDR=172.17.0.3" --name web -p 80:4567 rickfast/orelly-simple-web
-      
-- cointainer life cycle
-    #docker stop --time  10 web	//it will wait for the 10s and then it will stop the application
-    
-    
-- what happen when unexpacted cause a cointainerise process to fail?
-    To avoid above, we can use restart policy.
-      #docker run --name timebomb -d -p 80:4567 --restart unless-stopped  rickfast/oreilly-time-bomb		
-        Note:it will restart the applicaiton once it is exit everytime. The only way to make the cointainer not restart automatically is to explictly  "kill" or  stop the applicatoin.
-        
+	- how can we find in which port  applicaio  is map to?
+		1. run the command
+			#docker ps -l 	//it will list the last run cointainer only.
+		2. Another way to find the post is using 'docker port' command
+			#docker port applicaiton_name
+
+	- with the help of "-e" option we will pass the environment variable to cointainer.
+		 Example:
+			  #docker run -e "HELLO=VIKASH" ubuntu /bin/bash -c export
+	   passing the variable at the run time while creating the application
+	      #docker run  -d -e "REDIS_PORT_6379_TCP_ADDR=172.17.0.3" --name web -p 80:4567 rickfast/orelly-simple-web
+
+	- cointainer life cycle
+	    #docker stop --time  10 web	//it will wait for the 10s and then it will stop the application
+
+
+	- what happen when unexpacted cause a cointainerise process to fail?
+	    To avoid above, we can use restart policy.
+	      #docker run --name timebomb -d -p 80:4567 --restart unless-stopped  rickfast/oreilly-time-bomb		
+		Note:it will restart the applicaiton once it is exit everytime. The only way to make the cointainer not restart automatically is to explictly  "kill" or  stop the applicatoin.
+
 Docker Images
 ---------
-- If tag is not mention in the cammand, then it will pull the latest image from the docker hub.
-  #docker pull rabbitmq
+	- If tag is not mention in the cammand, then it will pull the latest image from the docker hub.
+	  #docker pull rabbitmq
 
-- run the docker image with the tag
-  #docker run -d -p 80:15672 rabbitmq:3.6.12-management
-- Building image
+	- run the docker image with the tag
+	  #docker run -d -p 80:15672 rabbitmq:3.6.12-management
+	- Building image
 
-    #docker search alpine 		//it will search the images in the docker hub
-    1. dowload the base os from the dokcer hub locally.
-      #docker pull alpine
-    2. there is 2 way to create docker images.
-      a. create a image from the running cointainer
-      b. create the image automatically from the Dockerfile.
-    3. we will be using 2(a), to create the docker images.
-    4. run the images into the interactive mode.
-      #docker run  -it alpine /bin/sh
-    5. After login, update the os and install the 'nodejs'
-       #apk update
-       #apk add nodejs
-       #node --version	//we can very the installation of nodejs
-    6. Now we can create a java script application or node applicaiotn and it takes series of number of argument and return its average.
-      #mkdir average
-      #cd average/
-      #vi average.js
-        #!/usr/bin/env node
-        var sum = 0;
-        var count = 0;
-        process.argv.forEach(function (val, index, array) {
-                if(index > 1) {
-                   sum += parseInt(val);
-                   count ++;
-                }
-        });
-        console.log(sum /count);
-      #chmod +x average.js
-      #./average.js
-      #./average.js  2 2 2
-    7. we can now commit changes to our running cointainer which will create a new image that cointains that cointain new directory and java script file. To commit changes from a cointainer  we need the "container id". Remember, cointaner internal  host name is the cointainer id. so we can the id by simply typing the hostname.
-      #hostname
-    8. to commit our changes to the cointainer, we can use the "docker commit" comamnd
-      #docker commit -m "installed node and wrote application" 877842cfc2d5	
-        where: docker commit ecepts a view flag one of is "-m" flag which allow us to commit message for the command.	
-    9. test the new image 
-      #docker run 2e03 average/average.js 4 4 4 4		//where: 2e03 - in the first few letters of the image id
--
--
--
--
--
--
+	    #docker search alpine 		//it will search the images in the docker hub
+	    1. dowload the base os from the dokcer hub locally.
+	      #docker pull alpine
+	    2. there is 2 way to create docker images.
+	      a. create a image from the running cointainer
+	      b. create the image automatically from the Dockerfile.
+	    3. we will be using 2(a), to create the docker images.
+	    4. run the images into the interactive mode.
+	      #docker run  -it alpine /bin/sh
+	    5. After login, update the os and install the 'nodejs'
+	       #apk update
+	       #apk add nodejs
+	       #node --version	//we can very the installation of nodejs
+	    6. Now we can create a java script application or node applicaiotn and it takes series of number of argument and return its average.
+	      #mkdir average
+	      #cd average/
+	      #vi average.js
+		#!/usr/bin/env node
+		var sum = 0;
+		var count = 0;
+		process.argv.forEach(function (val, index, array) {
+			if(index > 1) {
+			   sum += parseInt(val);
+			   count ++;
+			}
+		});
+		console.log(sum /count);
+	      #chmod +x average.js
+	      #./average.js
+	      #./average.js  2 2 2
+	    7. we can now commit changes to our running cointainer which will create a new image that cointains that cointain new directory and java script file. To commit changes from a cointainer  we need the "container id". Remember, cointaner internal  host name is the cointainer id. so we can the id by simply typing the hostname.
+	      #hostname
+	    8. to commit our changes to the cointainer, we can use the "docker commit" comamnd
+	      #docker commit -m "installed node and wrote application" 877842cfc2d5	
+		where: docker commit ecepts a view flag one of is "-m" flag which allow us to commit message for the command.	
+	    9. test the new image 
+	      #docker run 2e03 average/average.js 4 4 4 4		//where: 2e03 - in the first few letters of the image id
+
     
     
     
-by default, the docker takes the latest image
-images is store in the "/var/lib/docker/containers"
+	by default, the docker takes the latest image
+	images is store in the "/var/lib/docker/containers"
 
 
 # Docker file
@@ -277,63 +272,63 @@ to launch cointaner with the user defined network, we can specify the network na
 --------------------------------------------------------------------------------------
 
 Volumes
+-------
+	one way to create the volume is to create "-v" option when executing the docker run
+	date volumes and directory donot used NFS.
+	volumes can also be mounted  to directory on the host machines.
+	When mounting the volume to the localhost machine, we need to suppliy to absolute paths delimited by ":" "absolute path of the base machine:dircetory inside the cointainer to mount"
 
-one way to create the volume is to create "-v" option when executing the docker run
-date volumes and directory donot used NFS.
-volumes can also be mounted  to directory on the host machines.
-When mounting the volume to the localhost machine, we need to suppliy to absolute paths delimited by ":" "absolute path of the base machine:dircetory inside the cointainer to mount"
-
-data volume cointainer using the "docker create" command
-data volume cointainer are  the docker cointainer that dont run a applicaion. They just have the volume that can be shared.
-"docker create" is very similar to the "docker run" except that the created cointainer is never started.
-	#docker create -v /usr/local/var/lib/couchdb --name db-data debian:jessie /bin/true
+	data volume cointainer using the "docker create" command
+	data volume cointainer are  the docker cointainer that dont run a applicaion. They just have the volume that can be shared.
+	"docker create" is very similar to the "docker run" except that the created cointainer is never started.
+		#docker create -v /usr/local/var/lib/couchdb --name db-data debian:jessie /bin/true
 
 
-Using volume from the already created volume cointainer
-	#doceker run -d -p 5984:5984 -v /usr/local/var/lib/couchdb --name db1 --volume-from db-data klaemo/clouchdb
+	Using volume from the already created volume cointainer
+		#doceker run -d -p 5984:5984 -v /usr/local/var/lib/couchdb --name db1 --volume-from db-data klaemo/clouchdb
 
 -------------------------------------------------------------------------------------------------
 
 Docker Compose
+------
+	it uses a yml file that describe multiple cointainer to manage as a cointaier as a whole. 
+	There are 2 different specification of the docker-compose-yml file.
+	Example1: setting up the cointainer
 
-it uses a yml file that describe multiple cointainer to manage as a cointaier as a whole. 
-There are 2 different specification of the docker-compose-yml file.
-Example1: setting up the cointainer
-
-version: "2"			#####docker compose specification
-service:			#####service declearation
-	kv-store-1:		#####cointainer name 1
-		image: redis	#####operatoin perform in the 1st cointainer
-	kv-store-2:		#####cointainer name 2
-		image: redis	#####operatoin perform in the 1st cointainer
-
-
-#docker-compose up 		#####to run the docker file
-#docker-compose up -d 		#####to run the docker compose in the detach mode.
-#deocker-compose rm 		#####it will remove all the cointainer
-
-Note: if we run the above docker-compose file then it will create 2 cointaner.
-	
-Example2: Setting up the cointer and establishing the relation between them. (elk stack)
+	version: "2"			#####docker compose specification
+	service:			#####service declearation
+		kv-store-1:		#####cointainer name 1
+			image: redis	#####operatoin perform in the 1st cointainer
+		kv-store-2:		#####cointainer name 2
+			image: redis	#####operatoin perform in the 1st cointainer
 
 
-version: '2'
-service:
-	elasticsearch:
-		image: elasticsearch:2.2.1
-	kibana:
-		image: kibana:4.4.2
-		ports:
-			- "5601:5601"
-		environment:
-			- ELASTICSEARCH_URL=http://elasticsearch:9200
-		depends_on:
-			- elasticsearch
-	logstash:
-		image: logstash:2.2.2
-		command: -e 'input { tcp { port => 5555 }} output {  elasticsearch { hosts => ["elasticsearch:9200"] } }'
-		ports:
-			- "5555:5555"
-		depends_on:
-			- elasticsearch
-----------------------------------------------------------------------------------------
+	#docker-compose up 		#####to run the docker file
+	#docker-compose up -d 		#####to run the docker compose in the detach mode.
+	#deocker-compose rm 		#####it will remove all the cointainer
+
+	Note: if we run the above docker-compose file then it will create 2 cointaner.
+
+	Example2: Setting up the cointer and establishing the relation between them. (elk stack)
+
+
+	version: '2'
+	service:
+		elasticsearch:
+			image: elasticsearch:2.2.1
+		kibana:
+			image: kibana:4.4.2
+			ports:
+				- "5601:5601"
+			environment:
+				- ELASTICSEARCH_URL=http://elasticsearch:9200
+			depends_on:
+				- elasticsearch
+		logstash:
+			image: logstash:2.2.2
+			command: -e 'input { tcp { port => 5555 }} output {  elasticsearch { hosts => ["elasticsearch:9200"] } }'
+			ports:
+				- "5555:5555"
+			depends_on:
+				- elasticsearch
+	----------------------------------------------------------------------------------------
