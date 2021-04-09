@@ -1,0 +1,24 @@
+* systemctl replaces shutdown, service, chkconfig
+* we can shutdown or reboot the server by below commmand
+	  #systemctl poweroff
+	  #systemctl reboot
+* Lists all services and checks if they are enabled.
+	  #systemctl list-unit-files --type service
+* Check if the service is enable or disable
+	  #systemctl is-enabled <service-name>
+* With systemd, the concept of "runlevels" has been replaced by the concept of "target"
+* List all the target in the server
+	  #systemctl list-units --type target --all
+* Systemd target
+      0 poweroff.target	- Shutdown and poeroff system
+      1 rescue.target		- Set up a rescue shell
+      2 multi-user.target	- Set up a non-graphical multi-user system
+      3 multi-user.target	- Set up a non-graphical multi-user system
+      4 user.target		- Set up a non-graphical multi-user system
+      5 graphical.target	- Set up a graphical multi-user system
+      6 reboot.target		- Shut down and reboot the system
+
+* To check the default the target of the server
+	  #systemctl get-default
+* To set the default the target
+	  #systemctl set-default multi.user
