@@ -1,0 +1,45 @@
+* it is Distrinuted and highly available open source search enginebuild on top of Apache license.
+* we can store both Structure and Unstructure data.
+* it is written in JAVA.
+* Data stored in Elasticsearch is in JSON formate.
+* All the data stored in the Elasticsearch is in the form of indices.
+* camparision with the RDBM Databse and Elastic search
+      MySQL RDBMS Termonology   |  Elasticsearch Termonology
+      ----------------------------------------------------------
+            Database            |       Index
+            Table               |       Type
+            Row                 |       Document
+      ----------------------------------------------------------    
+
+* it provides REST API for operation.      
+* Below command will create the Index
+	PUT http://localhost:9200/<IndexName>
+	Content-Type: application/json
+  
+* Display the list of the indexes in the elasticsearch
+	GET http://localhost:9200/_alias
+	Content-Type: application/json
+  
+* Create the Document
+	PUT http://localhost:9200/<IndexName>/<type>/<id>
+	Content-Type: application/json
+  
+* Delete an Index
+	DELETE http://localhost:9200/<IndexName>/
+	Content-Type: application/json
+	
+* Delete an Document
+	DELETE http://localhost:9200/<IndexName>/<documenttype>/<id>
+	Content-Type: application/json
+
+* Searching document
+	GET http://localhost:9200/<IndexName>/<documenttype>/_search?q=<keyword>
+	GET http://localhost:9200/<IndexName>/<documenttype>/_search=<field>:<keyword>
+	Content-Type: application/json
+  
+* it cannot edit the document instead of that it create a new document with the version, every time we edit a field.
+
+
+* Mapping 
+	it provides the schema of the document.
+	It helps to make sure that the document with current fields and type is being stored in Elasticsearch.
