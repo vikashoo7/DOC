@@ -22,3 +22,7 @@
 	  #systemctl get-default
 * To set the default the target
 	  #systemctl set-default multi.user
+* List all service and check if they are enabled
+	systemctl list-unit-files --type service
+* List all the daemons failed to start upon bootup
+	systemctl --failed
