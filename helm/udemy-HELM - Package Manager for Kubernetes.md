@@ -27,7 +27,14 @@ Introduction
 	- Delete a specific Chart
 		#helm uninstall <chartname>
 		#helm uninstall mysql
-
+		
+Installing the helm
+------
+	get the desired version from this URL - https://github.com/helm/helm/releases
+	#tar -zxvf helm-v3.6.2-linux-amd64.tar.gz
+	#mv linux-amd64/helm /usr/local/bin/helm
+	#helm version				##tell the version of the helm
+	
 Create new helm chart
 ------------------------
 	- Create a new chart
@@ -60,3 +67,37 @@ Template
 		* To get the details of deployed manifest file
 			#helm get manifest <manifest-name>
 			#helm get manifest releasename-test
+	- Read values for templates
+		* Mention the variables in the "value.yml" file in the key value pair.
+			#vi value.yaml
+				myvar: myvalue
+		* calling the variable variable in the template
+			#vi template/configmap.yml			
+			data
+			  newValue: {{ .Values.myvalue }}
+		* Dry Run the Release
+			#helm install --debug --dry-run <path-to release> <path to the chart>		##This will generate the manifest file
+			#helm install --debug --dry-run firstrelease ./mychart
+		* Set a specific value at run time
+			#helm install --debug --dry-run --set cost=33333 firstrelease ./mychart
+	- Template functions
+		* There are n number of pre-defined functions available as part of go template.
+		* URL -> 
+			https://godoc.org/text/template
+			https://masterminds.github.io/sprig/
+		* Example
+			i) #vi values.yml
+				projectCode: aazzxxyy
+				infra:
+			 	 zone: a,b,c
+			 	 region: us-e
+			ii) then call the these values in the template/helmTemplaste.yml
+			#vi template/helmTemplaste.yml
+				Zone: {{ quote .Values.infra.zone }}
+				Region: {{ quote .Values.infra.region }}
+				ProjectCode: {{ upper .Values.projectCode }}
+
+			Note: quote, upper -> is the pre defined template.
+			iii) then run the below command to install
+				#helm instal --debug --dry-run helm-poroject ./mycharts
+	- Template functions
