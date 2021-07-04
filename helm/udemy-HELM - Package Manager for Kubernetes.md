@@ -184,5 +184,21 @@ Template
 			{{- template "mychart.systemlables" $ }}
 		iii) Run the helm
 			helm install --dry-run --debug templatedemo ./mychart
-	- Template functions
-	- Template functions
+	- Include template using keyword include
+		* Include provide additional option of mentioning how much indentation I wanted for particular template.
+		* Eg: {{ include "mychart.version" . | indent 4 }}
+	- Notes
+		* notes.txt contains note for the file and other helper templates within it. we can give instruction on what are all the notes that should get displayed once the chart is dosplayed.
+		* This act as another template where the normal template syntax can be included within the notes as well.
+	- Sub Charts
+		* it is chart under chart.
+		* Creating the sub Chart
+			#cd <chartname>/charts
+			#helm create <sub-chart-name>		##this will create a charts directory under the existing chart
+			#cd mycahrt/charts && helm create subchart		##Example
+	- Sub Chart global
+		* it is used to provide the same value accross all the cahrts and subcharts.
+		* Define the value in the "value.yml" file in the manin charts with the "global" keyword.
+		* Example:
+			global:
+			  orgdomain: com.example
