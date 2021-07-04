@@ -100,4 +100,89 @@ Template
 			Note: quote, upper -> is the pre defined template.
 			iii) then run the below command to install
 				#helm instal --debug --dry-run helm-poroject ./mycharts
+	- Template pipeline and default
+		* pipeline ->Same link linux concept
+		* Example
+			pipe: {{ upper .Values.projectCore | quote }}
+			now: {{ now | date "2016-01-02" | quote }}
+		* default -> This will list the default vaule
+		* Example
+			contact: {{ .Values.contact | default "1800-19-21-22" | quote }}
+				if contact is not defined or there is no output for contacts then "1800-19-21-22" will take the value by default
+	- Control flow if-else
+		* Syntax:
+			{{ if PIPELINE }}
+			  # Do Something
+			{{ else if OTHER PIPELINE }}
+			  # Do something else
+			{{ else }}
+			  # Default case
+			(( end }}
+		* A pipeline is evaluated as false if the value is:
+			1. A Boolean false
+			2. A numeric zero
+			3. An empty string
+			4. A nil (empty or null)
+			5. An empty collection(map, slice, tuple, dict, array)
+		* Example:
+			{{ if eq .Values.infra.region "India" }}ha: true {{end}}
+			{{- if eq .Values.infra.region "India" }}
+			ha: true 
+			{{end}}
+				"-"-> is used to remove the new line
+	- Defining scope using with
+		* modifying scope using with
+		* the value evaluated within that specific block
+		* Syntax
+			{{ with PIPELINE }}
+			  # restricted scope
+			{{end}} 	
+	- Range
+		* looping using range
+		* syntax
+		lang Used: |-
+		  {{-range.Values.LangUsed}}
+		  - {{ .|title|quote }}
+		  {{-end}}
+
+		* whereas
+		LangUsed:
+		  - python
+		  - Jave
+  		  - go
+
+	- variables
+		* variables will start with "$" and asigned with a special assignment operator ":="
+		* Variable will have the scope accross the template
+		* Eg: {{ - $relname := .Release.Name -}}
+	- Include content from same file
+		* starting with "_" may not have manifest.
+		* Example
+			{{- defin "mychart.labels"}}
+			labels:
+			  generate: helm
+			date: {{now|htmlDate }}
+			{{-end}}
+			{{-template "mychart.lanels"}}
+	- Include scope
+		* Template as a part of saparate file and include in another template.
+		* Example:
+		i) #vi _helpers.tpl
+			{{- define "mychart.systemlables" }}
+     			labels:
+       			  drive: ssd
+       			  machine: frontdrive
+       			  rack: 4c
+       			  vcard: 8g
+			  app.kubernetes.io/instance: "{{ $.Release.Name }}"
+			  app.kubernetes.io/version: "{{ $.Chart.AppVersion }}"
+			  app.kubernetes.io/managed-by: "{{ $.Release.Service }}"
+   			{{- end }}
+			
+		ii) Passing the scope. So that the value of the current template will populate to the template.
+			{{- template "mychart.systemlables" . }}
+			{{- template "mychart.systemlables" $ }}
+		iii) Run the helm
+			helm install --dry-run --debug templatedemo ./mychart
+	- Template functions
 	- Template functions
