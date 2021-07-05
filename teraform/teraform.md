@@ -1,11 +1,11 @@
 Installation
 -----
-    SSH into your cloud server
-    sudo yum install -y zip unzip (if these are not installed)
-    wget https://releases.hashicorp.com/terraform/0.9.8/terraform_0.9.8_linux_amd64.zip
-    unzip terraform_0.9.8_linux_amd64.zip
-    sudo mv terraform /usr/local/bin/
-    Confirm terraform binary is accessible: terraform --version
+    - SSH into your cloud server
+    - sudo yum install -y zip unzip (if these are not installed)
+    - wget https://releases.hashicorp.com/terraform/0.9.8/terraform_0.9.8_linux_amd64.zip
+    - unzip terraform_0.9.8_linux_amd64.zip
+    - sudo mv terraform /usr/local/bin/
+    - Confirm terraform binary is accessible: terraform --version
 
 Terforrm command
 ----------------
@@ -24,54 +24,48 @@ Terraform Resources
 
 Resource Argument & Exported Attributes
 ----------------------------------------
-    Resource have a set of arguments.
-      somne are required
-      Some are optional
-
-    Resource can have exported attributes
-	
-
-    Example of Exported Attributes
-
-      resource "aws_s3_bucket" "my_bucket" {
-       bucket = "my-first-bucket"
-      }
-
-    The aws_s3_bucket above returns the ARN created as one of its exported attributes
+    - Resource have a set of arguments.
+      1. somne are required
+      2. Some are optional
+    - Resource can have exported attributes
+    - Example of Exported Attributes
+    
+	      resource "aws_s3_bucket" "my_bucket" {
+	       bucket = "my-first-bucket"
+	      }
+    	The aws_s3_bucket above returns the ARN created as one of its exported attributes
 
 
 Interpolation Syntax
 --------------------
 
-    Interpolcation syntax is a way of having an expression that will be evaluated when terraform runs and replaced with the value.
+    - Interpolcation syntax is a way of having an expression that will be evaluated when terraform runs and replaced with the value.
+    - For example, you may want the ARN(Amazon Resource Name) of a created AWS object to use in an AWS IAM policy, the ARN is unkown before you create the resource so you can use interpolcation syntax to replace the ARN at runtime.
 
-    For example, you may want the ARN(Amazon Resource Name) of a created AWS object to use in an AWS IAM policy, the ARN is unkown before you create the resource so you can use interpolcation syntax to replace the ARN at runtime.
+    - To reference an exported attribute from a resource use the interpolation syntax format:
+    	 "${<resource_type>.<resource_name>.<exported_attribute>}"
 
-    To reference an exported attribute from a resource use the interpolation syntax format:
-     "${<resource_type>.<resource_name>.<exported_attribute>}"
+    - For example if we created a resource
 
-    For example if we created a resource
-
-      resource "aws_s3_bucket" my_bucket" {
-       bucket = "hello-world"
-      }
-
-    Reference the created s3 bucket ARN using "${aws_s3_bucket.my_bucket.arn}"
+	      resource "aws_s3_bucket" my_bucket" {
+	       bucket = "hello-world"
+	      }
+		Reference the created s3 bucket ARN using "${aws_s3_bucket.my_bucket.arn}"
 
 
-Importance of Inrerpolcation Syntax
+Importance of Interpolation Syntax
 -----------------------------------
     Helps Terraform work out dependency order
-    Makes refactoring easier as you only have a value a value defined in a single place
+    Makes refactoring easier as you only have a value defined in a single place
 
 
 Data types
 ----------
-    There are 4 main data types for resource attributes:
-      int - defined using - port = 21
-      String - defined using - host = "localhost"
-      List - defined using - security_groups = ["abc", "def"]
-      Bool - defined using - enabled = false
+    - There are 4 main data types for resource attributes:
+      1) int - defined using - port = 21
+      2) String - defined using - host = "localhost"
+      3) List - defined using - security_groups = ["abc", "def"]
+      4) Bool - defined using - enabled = false
 
 
 
