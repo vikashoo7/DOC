@@ -292,3 +292,49 @@ Repository Management
 			#helm package /root/helm_demo/gitrepotest2
 			#helm repo index .
 			#commit this to the repository
+
+Chart Management
+------------------
+	- Upgrade Helm Installed Chart
+		* Removing the repository
+			#helm repo remove <repo-name>
+		* Install the repo from the repository directly
+			#helm install <installation-name> <path to the repositoty>
+			#helm install inatall-upgrade-demo mychartmuseumrepo/upgrade-rlbk	##Example
+			#helm list		##list all the helm deployment	
+		* upgrading the existing helm deploymrnt
+			#helm upgrade <installation-name> <path to the repositoty>
+			#helm upgrade inatall-upgrade-demo mychartmuseumrepo/upgrade-rlbk	##Example
+		* TO check the history of helm deployment
+			#helm history <install-name>
+			#helm history inatall-upgrade-demo
+
+	- Rollback Helm Installed Chart
+		* Rollback the helm deployment to the previous version
+			#helm history <installation-name>
+			#helm rollback <installation-name> <revision-number>
+			#helm history inatall-upgrade-demo		##Example
+			#helm rollback inatall-upgrade-demo 2		##Example
+
+	- Helm Dependency
+		* if a chart has a dependency with other charts then we can mention the dependecy in the "Chart.yml" file
+		* syntax:
+			dependencies:
+			  - name: mariadb
+			    version: 7.x.x
+			    repository: https://kubernetes-charts.storage.googleapis.com/
+		Build the charts again with the dependency.
+			#helm dependency build <chat-path>
+			#helm dependency build ./dependencytest		#Example
+
+	- Chart Hook - Pre and Post Install Hook
+		1) Preinstall hooks run after templates are rendered and before any resource are created in K8s
+		2) Post-install hooks run after all resource are loaded into k8s
+		3) Pre-delete hooks run before any resource are deleted from the K8s
+		4) Pre-upgrade hooks run after templates are rendered and before any resources are loaded into K8s
+		5) Post-upgrade hooks run after all resources are upgraded
+		6) Pre-rollback hooks run after all resources are rolled back
+		7) Post-rollback hooks run after all resource are modified.
+
+	- Chart Hook - Pre and Post Install Hook
+		* we can mention component as a hook by adding an annotation.	
