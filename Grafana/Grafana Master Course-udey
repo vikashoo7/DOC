@@ -1,0 +1,6 @@
+Panels associated to different data sources in a single dashboard.
+panels are not strongly associated to the dashboard.
+Dashboard comprises of n number of rows and each row is logically divided into 12 columns.
+Logically, browser is divided into 12 units
+There are 5 different type of panels
+	graph, single stat,dash list, table and text.
