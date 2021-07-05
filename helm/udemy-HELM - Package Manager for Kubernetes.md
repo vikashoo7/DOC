@@ -202,3 +202,93 @@ Template
 		* Example:
 			global:
 			  orgdomain: com.example
+			  
+Repository Management
+-------------
+	- Repository Workflow
+		* Chart Repositories
+			1) An HTTP server hosting index.yaml file along with chart packages
+			2) When charts are ready, can be uploaded to the server and shared
+			3) Multiple charts with dependency control system in a common location
+			4) can be hosted as part of
+				i) Google Compute Cloud Bucket
+				ii) AWS S3 Bucket
+				iii) Github Pages
+				iv) Own webserver(chartmuseum)
+
+	- Chartmuseum installation
+		* COD URL -> https://chartmuseum.com/docs/
+		* follow the below steps for installation
+			#curl -LO https://s3.amazonaws.com/chartmuseum/release/latest/bin/linux/amd64/chartmuseum
+			#chmod +x ./chartmuseum
+			#mv ./chartmuseum /usr/local/bin
+			#chartmuseum --version		##display the version
+
+		* Creating the chartmuseum locally
+			# chartmuseum --debug --port=8080 --storage="local" --storage-local-rootdir="./chartstorage"
+			note: "chartstorage" -> this is storage for charmuseum
+
+		* Access the below link if chartmuseum installed successfully
+			https://<server-name>:8080
+
+	- Add Chartmuseum repository
+		# helm repo list	##List the repository
+		# helm repo add <name-of-repository> http://<server-ip>:8080	##Add the repository
+		#helm repo add chartmuseum http://localhost:8080	##Example
+		#helm search repo nginx		##this will search for the nginx in the helm repository
+		#helm search repo <repository-name> ###list all the package of the repository
+
+	- Add Chart to Chartmuseum repository 
+		* Create a plugin to add the charts to the repository
+			#mkdir helm_demo_repo
+			#cd helm_demo_repo
+			#helm create repotest		###create the charts
+		* Push the charts to the repository	
+			Add the files under the repotest
+			#helm package repotest		###package the charts
+			#curl --data-binary "@<package-name-from-above" http://<server-ip>:8080/api/charts
+			#curl --data-binary "@repotest-0.1.1.tgz" http://192.168.0.52:8080/api/charts	##Example
+			#helm repo update		##update the repository with the latest package
+			#helm search repo <repo-name>	##list all the charts in the repository
+
+	- Maintain Chart version
+		* URL-> https://semver.org/ -> tells about the versioning
+		* The version information will mention in the "Chart.yml"
+		* we need to mention version in 2 placces.One is for chart and other is for application.
+		* Package the chart
+			#helm package repotest/
+		* Add the chart to the repository
+			#curl --data-binary "@repotest-0.1.1.tgz" http://localhost:8080/api/charts
+		* list the chart
+			#helm repo update
+			#helm search repo <repo-name>
+			# helm search repo -l <repo-name>		##list all version of the chart
+
+	- Chart push plugin
+		* Run the below command to install
+			#helm plugin install https://github.com/chartmuseum/helm-push.git
+		* List all the helm plugin
+			#helm plugin list
+		* Push the charts in the repository
+			#helm push <chart-directory> <repository-name>
+			#helm puch helmpushdemo/ mychartmuseumrepo
+
+	- Maintain github as repository
+		* Create a repository to the git
+		* package the repository 
+		* create the index file
+			#helm repo index .
+		* Commint everything to the git now
+		* Chartmuseum automatically generate the index.yml file once we add the zipped content to the storage location.
+
+	- Add Charts to github repository
+		* run the below command
+			#helm repo add --username myusername@gmail.com --password <<acccess token>> <repo-name> 'https://raw.githubusercontent.com/muthu4all/helm_git_repo/master'
+			#helm search repo <repo-neme>
+		* Now i can add any number of charts in the git. Whenever we are upadting the charts, we need to update the index.yml also
+		* Add another charts
+			#helm create gitrepotest2
+			#cd gitrepotest2
+			#helm package /root/helm_demo/gitrepotest2
+			#helm repo index .
+			#commit this to the repository
